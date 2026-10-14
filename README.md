@@ -4,9 +4,9 @@
 Homebrew Hub is a web-based character and campaign companion built for Dungeon Masters running homebrew campaigns. Instead of forcing custom worlds into official-rule tools, it lets DMs define their own races, classes, subclasses, backgrounds, and items in a structured format so players can build, play, and level up characters directly from that custom content.
 
 ## Team Members
-- Person A
-- Person B
-- Person C
+- Cody Owens
+- Cameron Troy
+- Nicholas Beaty
 
 ## Technologies Used
 - HTML
