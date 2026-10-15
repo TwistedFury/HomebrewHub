@@ -1,0 +1,751 @@
+/* ============================================================
+   NICK'S HOMEBREW WIKI — Atributes.css
+   Single stylesheet for all pages.
+   Link in every page's <head>:
+     <link rel="stylesheet" href="../../Atributes.css">
+   (adjust the path depth as needed per subfolder)
+   ============================================================ */
+
+
+/* ── DESIGN TOKENS ──────────────────────────────────────────
+   All colours live here. Light mode is the default.
+   Dark mode overrides follow immediately after.
+   ---------------------------------------------------------- */
+
+:root {
+  /* Backgrounds */
+  --bg:            #f4f1ea;
+  --bg-paper:      #fcfaf6;
+  --bg-sunken:     #ede7db;
+  --bg-table-head: #e8dfd2;
+  --bg-row-hover:  #f3ede4;
+
+  /* Text */
+  --ink:           #2f2419;
+  --muted:         #6b5b4b;
+
+  /* Borders */
+  --line:          #cdbfae;
+
+  /* Accent */
+  --accent:        #7a3e1d;
+  --accent-hi:     #5f2f15;
+
+  /* Misc */
+  --shadow:        rgba(0, 0, 0, 0.08);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:            #141210;
+    --bg-paper:      #1c1916;
+    --bg-sunken:     #111009;
+    --bg-table-head: #26211a;
+    --bg-row-hover:  #221e18;
+
+    --ink:           #e8e0d4;
+    --muted:         #9c8f80;
+
+    --line:          #3a322a;
+
+    --accent:        #c47a50;
+    --accent-hi:     #e09060;
+
+    --shadow:        rgba(0, 0, 0, 0.35);
+  }
+}
+
+
+/* ── RESET ──────────────────────────────────────────────────*/
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+
+/* ── BASE ───────────────────────────────────────────────────*/
+
+body {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.55;
+  padding: 2rem 2.5rem;
+}
+
+/* homepage overrides the default body padding below */
+
+p {
+  margin-bottom: 1rem;
+}
+
+ul, ol {
+  margin-bottom: 1rem;
+  padding-left: 2rem;
+}
+
+li {
+  margin-bottom: 0.25rem;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 1rem 0;
+}
+
+img {
+  width: 500px;
+  height: auto;
+  max-width: 100%;
+}
+
+footer {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-top: 2rem;
+}
+
+
+/* ── TYPOGRAPHY ─────────────────────────────────────────────*/
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  color: var(--accent);
+  margin-top: 1.5rem;
+  margin-bottom: 0.4rem;
+}
+
+h1 {
+  font-size: 2.2rem;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  border-bottom: 2px solid var(--line);
+  padding-bottom: 0.5rem;
+}
+
+h2 {
+  font-size: 1.35rem;
+}
+
+h3 {
+  font-size: 1.1rem;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+a:hover {
+  color: var(--accent-hi);
+  text-decoration: underline;
+}
+
+
+/* ── PAGE LAYOUT HELPERS ────────────────────────────────────*/
+
+/* Optional wrappers pages can use for card-style layout */
+.page-shell {
+  max-width: 1250px;
+  margin: 0 auto;
+  padding: 2rem 1rem 4rem;
+}
+
+.page-card {
+  background: var(--bg-paper);
+  border: 1px solid var(--line);
+  box-shadow: 0 8px 24px var(--shadow);
+  padding: 2rem;
+}
+
+.intro {
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+}
+
+
+/* ── TABLES ─────────────────────────────────────────────────*/
+
+/* .content-table: used on content pages (no forced min-width) */
+.content-table {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 1.25rem;
+  border-collapse: collapse;
+  background: var(--bg-paper);
+  border: 1px solid var(--line);
+}
+
+/* Full-width scrollable table (spell page etc.) */
+table {
+  width: 100%;
+  min-width: 1100px;
+  border-collapse: collapse;
+  background: var(--bg-paper);
+  border: 1px solid var(--line);
+}
+
+th,
+td {
+  text-align: left;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--line);
+  vertical-align: top;
+}
+
+th {
+  background: var(--bg-table-head);
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+}
+
+th:hover {
+  background: var(--line);
+}
+
+tbody tr:hover {
+  background: var(--bg-row-hover);
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+
+/* ── FILTERS ────────────────────────────────────────────────*/
+
+.filters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background: var(--bg-sunken);
+  border: 1px solid var(--line);
+}
+
+.filters label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+  color: var(--ink);
+}
+
+.filters input,
+.filters select,
+.filters button {
+  width: 100%;
+  padding: 0.55rem 0.65rem;
+  border: 1px solid var(--line);
+  background: var(--bg-paper);
+  color: var(--ink);
+  font: inherit;
+}
+
+.filter-actions {
+  display: flex;
+  align-items: end;
+}
+
+.filter-actions button {
+  cursor: pointer;
+  background: var(--accent);
+  color: var(--bg);
+  border-color: var(--accent);
+}
+
+.filter-actions button:hover {
+  background: var(--accent-hi);
+}
+
+.results-bar {
+  margin: 0.75rem 0 1rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.no-results {
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  background: var(--bg-paper);
+  color: var(--muted);
+}
+
+
+/* ── BACK BUTTON ────────────────────────────────────────────*/
+
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 1.25rem;
+  padding: 5px 12px 5px 8px;
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  color: var(--muted);
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.12s, border-color 0.12s, background 0.12s;
+}
+
+.back-btn:hover {
+  color: var(--ink);
+  border-color: var(--accent);
+  background: var(--bg-sunken);
+  text-decoration: none;
+}
+
+.back-btn::before {
+  content: '←';
+  font-size: 1rem;
+  line-height: 1;
+}
+
+
+/* ── SPELL PAGE ─────────────────────────────────────────────*/
+
+.spell-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1rem 3rem;
+}
+
+.spell-entry {
+  background: var(--bg-paper);
+  border: 1px solid var(--line);
+  padding: 1.5rem 2rem;
+  box-shadow: 0 2px 8px var(--shadow);
+}
+
+.spell-subtitle {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: var(--muted);
+  font-size: 1rem;
+}
+
+.spell-meta {
+  background: var(--bg-sunken);
+  border: 1px solid var(--line);
+  padding: 0.85rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.spell-meta p {
+  margin: 0.25rem 0;
+}
+
+.spell-body p {
+  margin: 0 0 1rem 0;
+}
+
+.spell-footer {
+  margin-top: 1.25rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+
+/* ============================================================
+   HOME PAGE
+   Scoped to body.home-page — zero effect on other pages.
+   ============================================================ */
+
+.home-page {
+  --hp-bg:     #ffffff;
+  --hp-bg2:    #f6f5f3;
+  --hp-border: #e2ddd8;
+  --hp-text:   #1a1a1a;
+  --hp-muted:  #6b6560;
+  --hp-accent: #8b3a3a;
+}
+
+@media (prefers-color-scheme: dark) {
+  .home-page {
+    --hp-bg:     #141414;
+    --hp-bg2:    #1e1c1a;
+    --hp-border: #2e2b28;
+    --hp-text:   #e8e4de;
+    --hp-muted:  #857f78;
+    --hp-accent: #c0614f;
+  }
+}
+
+/* Override the default body padding/max-width for the homepage */
+body.home-page {
+  background-color: var(--hp-bg);
+  color: var(--hp-text);
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  padding: 0;
+}
+
+.hp-layout {
+  display: flex;
+  min-height: 100vh;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Sidebar */
+.hp-sidebar {
+  width: 220px;
+  min-width: 220px;
+  border-right: 1px solid var(--hp-border);
+  padding: 28px 0 40px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--hp-border) transparent;
+}
+
+.hp-site-title {
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--hp-text);
+  padding: 0 18px 18px;
+  border-bottom: 1px solid var(--hp-border);
+  margin-bottom: 14px;
+  line-height: 1.3;
+}
+
+.hp-site-title span {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 400;
+  color: var(--hp-muted);
+  font-family: 'Inter', sans-serif;
+  margin-top: 2px;
+}
+
+.hp-nav-group {
+  margin-bottom: 2px;
+}
+
+.hp-nav-label {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--hp-muted);
+  padding: 8px 18px 2px;
+}
+
+.hp-nav-group a {
+  display: block;
+  padding: 3px 18px;
+  font-size: 13px;
+  color: var(--hp-muted);
+  text-decoration: none;
+  font-weight: normal;
+  transition: color 0.1s;
+}
+
+.hp-nav-group a:hover {
+  color: var(--hp-text);
+  text-decoration: none;
+}
+
+.hp-nav-acc-btn {
+  width: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 3px 18px;
+  font-size: 13px;
+  color: var(--hp-muted);
+  font-family: 'Inter', sans-serif;
+  text-align: left;
+  transition: color 0.1s;
+}
+
+.hp-nav-acc-btn:hover,
+.hp-nav-acc-btn.open {
+  color: var(--hp-text);
+}
+
+.hp-nav-acc-btn .arr {
+  font-size: 8px;
+  transition: transform 0.15s;
+}
+
+.hp-nav-acc-btn.open .arr {
+  transform: rotate(90deg);
+}
+
+.hp-nav-acc-panel {
+  display: none;
+}
+
+.hp-nav-acc-panel.open {
+  display: block;
+}
+
+.hp-nav-acc-panel a {
+  padding-left: 28px;
+  font-size: 12.5px;
+}
+
+/* Main */
+.hp-main {
+  flex: 1;
+  min-width: 0;
+  padding: 44px 44px 72px;
+}
+
+/* Hero */
+.hp-hero {
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--hp-border);
+  margin-bottom: 40px;
+}
+
+.hp-hero h1 {
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 1.1;
+  margin-bottom: 8px;
+  color: var(--hp-text);
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.hp-hero p {
+  color: var(--hp-muted);
+  font-size: 14.5px;
+  max-width: 500px;
+  margin-bottom: 14px;
+}
+
+.hp-spoiler {
+  display: inline-block;
+  font-size: 12px;
+  color: var(--hp-accent);
+  border: 1px solid var(--hp-accent);
+  border-radius: 4px;
+  padding: 3px 9px;
+  opacity: 0.9;
+}
+
+.hp-recent {
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--hp-muted);
+}
+
+.hp-recent strong {
+  color: var(--hp-text);
+  font-weight: 500;
+}
+
+.hp-sec-head {
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-size: 19px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--hp-text);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hp-sec-head::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--hp-border);
+}
+
+/* Category cards */
+.hp-cat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+  gap: 8px;
+  margin-bottom: 44px;
+}
+
+.hp-cat-card {
+  background: var(--hp-bg2);
+  border: 1px solid var(--hp-border);
+  border-radius: 6px;
+  padding: 13px 15px;
+  text-decoration: none;
+  color: var(--hp-text);
+  display: block;
+  transition: border-color 0.12s;
+}
+
+.hp-cat-card:hover {
+  border-color: var(--hp-accent);
+  text-decoration: none;
+}
+
+.hp-cat-card .ct {
+  font-size: 13.5px;
+  font-weight: 500;
+  margin-bottom: 2px;
+  color: var(--hp-text);
+}
+
+.hp-cat-card .cs {
+  font-size: 12px;
+  color: var(--hp-muted);
+}
+
+/* Subclass accordions */
+.hp-sub-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
+  gap: 7px;
+  margin-bottom: 44px;
+}
+
+.hp-sub-acc {
+  border: 1px solid var(--hp-border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.hp-sub-acc-btn {
+  width: 100%;
+  background: var(--hp-bg2);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 9px 13px;
+  font-size: 13.5px;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+  color: var(--hp-text);
+  text-align: left;
+  transition: background 0.1s;
+}
+
+.hp-sub-acc-btn:hover {
+  background: var(--hp-border);
+}
+
+.hp-sub-acc-btn .arr {
+  font-size: 8px;
+  color: var(--hp-muted);
+  transition: transform 0.15s;
+}
+
+.hp-sub-acc-btn.open .arr {
+  transform: rotate(90deg);
+}
+
+.hp-sub-acc-panel {
+  display: none;
+  background: var(--hp-bg);
+}
+
+.hp-sub-acc-panel.open {
+  display: block;
+}
+
+.hp-sub-acc-panel a {
+  display: block;
+  padding: 5px 13px 5px 17px;
+  font-size: 13px;
+  color: var(--hp-muted);
+  text-decoration: none;
+  font-weight: normal;
+  border-bottom: 1px solid var(--hp-border);
+  transition: color 0.1s, background 0.1s;
+}
+
+.hp-sub-acc-panel a:last-child {
+  border-bottom: none;
+}
+
+.hp-sub-acc-panel a:hover {
+  color: var(--hp-text);
+  background: var(--hp-bg2);
+  text-decoration: none;
+}
+
+/* Homepage footer */
+body.home-page footer {
+  font-size: 12px;
+  color: var(--hp-muted);
+  border-top: 1px solid var(--hp-border);
+  padding-top: 18px;
+  margin-top: 0;
+}
+
+body.home-page footer a {
+  color: var(--hp-muted);
+  font-weight: normal;
+  text-decoration: none;
+}
+
+body.home-page footer a:hover {
+  color: var(--hp-text);
+}
+
+/* Mobile */
+.hp-mob-toggle {
+  display: none;
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 50;
+  background: var(--hp-bg2);
+  border: 1px solid var(--hp-border);
+  border-radius: 5px;
+  color: var(--hp-text);
+  font-size: 15px;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 660px) {
+  .hp-mob-toggle {
+    display: flex;
+  }
+
+  .hp-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: var(--hp-bg);
+    z-index: 40;
+    transform: translateX(-100%);
+    transition: transform 0.2s;
+    padding-top: 48px;
+  }
+
+  .hp-sidebar.open {
+    transform: translateX(0);
+  }
+
+  .hp-main {
+    padding: 56px 18px 60px;
+  }
+}
