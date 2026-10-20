@@ -72,6 +72,37 @@ Open `index.html` (or `homePage.html`) in your browser.
 
 Start building or viewing Homebrew Hub pages from the `Pages/` directory as needed.
 
+## 🌐 GitHub Pages deployment
+
+This is a static site, so GitHub Pages serves the HTML, JavaScript, CSS, and JSON
+directly. The included `.github/workflows/deploy-pages.yml` deploys the repository
+when changes are pushed to `main`.
+
+1. Push the project to GitHub and open **Settings → Pages**.
+2. Under **Build and deployment**, choose **GitHub Actions** as the source.
+3. Push to `main` or run **Deploy static site to GitHub Pages** from the Actions tab.
+
+The campaign page reads the `id` query parameter and selects that record from
+`Data/campaigns.json`:
+
+```text
+https://<owner>.github.io/<repository>/Pages/Campaigns.html?id=nickb-1
+```
+
+For example, the campaign in the sample data is available with:
+
+```text
+Pages/Campaigns.html?id=nickb-1
+```
+
+Add more records to `Data/campaigns.json` with unique `campaign_id` values and
+use each value in the URL. Because the data is loaded with `fetch`, use a local
+HTTP server while developing rather than opening the HTML file directly:
+
+```bash
+python -m http.server
+```
+
 ---
 
 <div align="center">
