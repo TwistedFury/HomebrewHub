@@ -149,6 +149,9 @@ function formatTime(time) {
 function formatRange(range) {
   const distance = range?.distance;
   if (!distance) return range?.type || "";
+  if (distance.type === "self") return "Self";
+  if (distance.type === "touch") return "Touch";
+  if (distance.amount === undefined) return distance.type || "";
   return `${distance.amount} ${distance.type}`;
 }
 
