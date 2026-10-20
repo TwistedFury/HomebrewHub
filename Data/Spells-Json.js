@@ -175,7 +175,7 @@ function normalizeSpell(spell) {
     concentration: duration.some(entry => entry.concentration === true),
     ritual: spell.meta?.ritual === true,
     classes: classes.map(entry => entry.name),
-    url: "#"
+    url: `Spell-Display.html?name=${encodeURIComponent(spell.name)}`,
   };
 }
 

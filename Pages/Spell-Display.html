@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Spell Details</title>
+    <meta name="description" content="Spell details.">
+    <meta name="author" content="Nicholas Beaty - Cody Owens">
+
+    <link rel="stylesheet" type="text/css" href="../styles.css">
+</head>
+<body>
+    <main class="spell-page">
+        <article class="spell-entry">
+            <h1 id="spellName"></h1>
+            <p id="spellSubtitle" class="spell-subtitle"></p>
+
+            <section class="spell-meta">
+                <p><strong>Casting Time:</strong> <span id="castingTime"></span></p>
+                <p><strong>Range:</strong> <span id="spellRange"></span></p>
+                <p><strong>Components:</strong> <span id="components"></span></p>
+                <p><strong>Duration:</strong> <span id="duration"></span></p>
+            </section>
+
+            <hr>
+
+            <section class="spell-body">
+                <div id="spellDescription"></div>
+
+                <div id="higherLevels"></div>
+            </section>
+
+            <section class="spell-footer">
+                <p><strong>Spell Lists:</strong> <span id="spellLists"></span></p>
+            </section>
+        </article>
+    </main>
+    <script src="../Data/Spell-Display.js"></script>
+</body>
+</html>
