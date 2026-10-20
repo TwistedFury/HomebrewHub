@@ -18,6 +18,17 @@ let currentSort = {
 
 let spellNum = 0;
 
+const schoolNames = {
+  A: "Abjuration",
+  C: "Conjuration",
+  D: "Divination",
+  E: "Enchantment",
+  I: "Illusion",
+  N: "Necromancy",
+  T: "Transmutation",
+  V: "Evocation"
+};
+
 function levelLabel(level) {
   if (level === "0") return "Cantrip";
   if (level === "1") return "1st";
@@ -48,7 +59,10 @@ function renderTableRows(spellList) {
 
   for (const spell of spellList) {
     const row = document.createElement("tr");
-    const schools = [spell.school].flat().join(", ");
+    const schools = [spell.school]
+      .flat()
+      .map(school => schoolNames[school] || school)
+      .join(", ");
 
     row.innerHTML = `
       <td><a href="${spell.url}">${spell.name}</a></td>

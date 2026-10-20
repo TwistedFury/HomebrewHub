@@ -1,15 +1,127 @@
-<h1>Fireball</h1>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="description" content="HOLY SPELL LIST">
+        <meta name="author" content="Cody Owens">
+        <title>Homebrew Hub - Spells Page</title>
 
-<h2>Level: 3</h2>
+        <link rel = "stylesheet" href = "../styles.css" />
+    </head>
+    <body>
+  <main class="page-shell">
+    <section class="page-card">
+      <h1>Spells</h1>
+      <p class="intro">
+        Browse all spells in the wiki. Use the filters below to narrow the list,
+        then click a spell name to open its full entry.
+      </p>
 
-<h2>School: Evocation</h2>
-<h3>Casting Time: 1 action</h3>
-<h3>Range: 150 feet</h3>
-<h3>Components: V, S, M (a tiny ball of bat guano and sulfur)</h3>
-<h3>Duration: Instantaneous</h3>
+      <section class="filters">
+        <div>
+          <label for="searchInput">Search by Name</label>
+          <input type="text" id="searchInput" placeholder="Search spells..." />
+        </div>
 
-<p>A bright streak flashes from your pointing finger to a point you choose within range and then blossoms with a low roar into an explosion of flame. Each creature in a 20-foot-radius sphere centered on that point must make a Dexterity saving throw. A target takes 8d6 fire damage on a failed save, or half as much damage on a successful one.</p>
+        <div>
+          <label for="levelFilter">Level</label>
+          <select id="levelFilter">
+            <option value="">All Levels</option>
+            <option value="0">Cantrip</option>
+            <option value="1">1st</option>
+            <option value="2">2nd</option>
+            <option value="3">3rd</option>
+            <option value="4">4th</option>
+            <option value="5">5th</option>
+            <option value="6">6th</option>
+            <option value="7">7th</option>
+            <option value="8">8th</option>
+            <option value="9">9th</option>
+          </select>
+        </div>
 
-<p>The fire spreads around corners. It ignites flammable objects in the area that aren't being worn or carried.</p>
+        <div>
+          <label for="schoolFilter">School</label>
+          <select id="schoolFilter">
+            <option value="">All Schools</option>
+            <option value="A">Abjuration</option>
+            <option value="C">Conjuration</option>
+            <option value="D">Divination</option>
+            <option value="E">Enchantment</option>
+            <option value="V">Evocation</option>
+            <option value="I">Illusion</option>
+            <option value="N">Necromancy</option>
+            <option value="T">Transmutation</option>
+          </select>
+        </div>
 
-<p>At Higher Levels. When you cast this spell using a spell slot of 4th level or higher, the damage increases by 1d6 for each slot level above 3rd.</p>
+        <div>
+          <label for="ritualFilter">Ritual</label>
+          <select id="ritualFilter">
+            <option value="">Any</option>
+            <option value="true">Ritual Only</option>
+            <option value="false">Non-Ritual</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="concentrationFilter">Concentration</label>
+          <select id="concentrationFilter">
+            <option value="">Any</option>
+            <option value="true">Concentration Only</option>
+            <option value="false">Non-Concentration</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="classFilter">Class</label>
+          <select id="classFilter">
+            <option value="">All Classes</option>
+            <option value="Bard">Bard</option>
+            <option value="Cleric">Cleric</option>
+            <option value="Druid">Druid</option>
+            <option value="Paladin">Paladin</option>
+            <option value="Ranger">Ranger</option>
+            <option value="Sorcerer">Sorcerer</option>
+            <option value="Warlock">Warlock</option>
+            <option value="Wizard">Wizard</option>
+          </select>
+        </div>
+
+        <div class="filter-actions">
+          <button id="clearFilters" type="button">Clear Filters</button>
+        </div>
+      </section>
+
+      <div class="results-bar">
+        <span id="resultsCount">Loading spells...</span>
+      </div>
+
+      <div class="table-wrap">
+        <table id="spellsTable">
+          <thead>
+            <tr>
+              <th data-sort="name">Spell Name</th>
+              <th data-sort="level">Level</th>
+              <th data-sort="school">School</th>
+              <th data-sort="castingTime">Casting Time</th>
+              <th data-sort="range">Range</th>
+              <th data-sort="duration">Duration</th>
+              <th data-sort="ritual">Ritual</th>
+              <th data-sort="concentration">Concentration</th>
+              <th data-sort="classes">Classes</th>
+            </tr>
+          </thead>
+          <tbody id="spellsTableBody"></tbody>
+        </table>
+      </div>
+
+      <div id="noResults" class="no-results" hidden>
+        No spells matched the current filters.
+      </div>
+    </section>
+  </main>
+
+  <script src="../Javascript/Spells-Json.js"></script>
+</body>
+</html>
