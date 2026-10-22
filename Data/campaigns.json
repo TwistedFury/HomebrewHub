@@ -5,5 +5,21 @@
         "character_level": 1,
         "description": "A 1920s era setting for Dungeons and Dragons 5th Edition.",
         "player_count": 42
+    },
+    {
+        "name": "Test-Campaign",
+        "dm": "Nick",
+        "character_level": 20,
+        "description": "test description",
+        "player_count": 1,
+        "campaign_id": "campaign-c83c9518"
+    },
+    {
+        "name": "Test-Campaign 2",
+        "dm": "Nick",
+        "character_level": 20,
+        "description": "Test",
+        "player_count": 1,
+        "campaign_id": "campaign-f9b2cb15"
     }
 ]

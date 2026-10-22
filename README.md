@@ -45,6 +45,7 @@ Instead of forcing custom worlds into official-rule tools, it lets DMs define th
 | Category | Tools |
 | --- | --- |
 | **Front End** | HTML, CSS, JavaScript |
+| **Back End** | Python |
 | **Data** | JSON |
 | **Version Control** | GitHub |
 | **Libraries** | Fantastic Dice |
@@ -64,9 +65,20 @@ git clone https://github.com/TwistedFury/HomebrewHub.git
 cd HomebrewHub
 ```
 
-**3. Launch the app**
+**3. Start the local server**
 
-Open `index.html` (or `homePage.html`) in your browser.
+Campaign creation writes to `Data/campaigns.json`, so run the included Python
+server instead of opening the HTML file directly:
+
+```bash
+python server.py
+```
+
+Then open `http://localhost:8000/Pages/Campaigns.html`.
+
+If you prefer VS Code Live Server, start `python server.py` separately and open
+the page through Live Server. The campaign page automatically sends its API
+requests to the Python server when Live Server uses port 5500.
 
 **4. Explore**
 
@@ -96,12 +108,8 @@ Pages/Campaigns.html?id=nickb-1
 ```
 
 Add more records to `Data/campaigns.json` with unique `campaign_id` values and
-use each value in the URL. Because the data is loaded with `fetch`, use a local
-HTTP server while developing rather than opening the HTML file directly:
-
-```bash
-python -m http.server
-```
+use each value in the URL. Use `server.py` while developing so campaign form
+submissions are written to the JSON file.
 
 ---
 
