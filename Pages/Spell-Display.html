@@ -2,37 +2,37 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Spell Details</title>
-    <meta name="description" content="Spell details.">
+    <title>Spell Display - Homebrew Hub</title>
+    <meta name="description" content="Search and display up to eight spells at once.">
     <meta name="author" content="Nicholas Beaty - Cody Owens">
 
     <link rel="stylesheet" type="text/css" href="../styles.css">
 </head>
 <body>
-    <main class="spell-page">
-        <article class="spell-entry">
-            <h1 id="spellName"></h1>
-            <p id="spellSubtitle" class="spell-subtitle"></p>
+    <main class="spell-display-page">
+        <h1>Spell Display</h1>
+        <p class="intro">
+            Search the spell library and add up to eight spells. Select a spell to
+            compare its details with the others below.
+        </p>
 
-            <section class="spell-meta">
-                <p><strong>Casting Time:</strong> <span id="castingTime"></span></p>
-                <p><strong>Range:</strong> <span id="spellRange"></span></p>
-                <p><strong>Components:</strong> <span id="components"></span></p>
-                <p><strong>Duration:</strong> <span id="duration"></span></p>
-            </section>
+        <section class="spell-picker" aria-labelledby="spellSearchHeading">
+            <h2 id="spellSearchHeading">Find spells</h2>
+            <label for="spellSearch">Search by spell name</label>
+            <input id="spellSearch" type="search" autocomplete="off"
+                   placeholder="Start typing a spell name..." aria-controls="spellSearchResults">
+            <p id="searchStatus" class="results-bar" aria-live="polite">Loading spells...</p>
+            <ul id="spellSearchResults" class="spell-search-results"></ul>
+        </section>
 
-            <hr>
-
-            <section class="spell-body">
-                <div id="spellDescription"></div>
-
-                <div id="higherLevels"></div>
-            </section>
-
-            <section class="spell-footer">
-                <p><strong>Spell Lists:</strong> <span id="spellLists"></span></p>
-            </section>
-        </article>
+        <section class="spell-selection" aria-labelledby="selectedSpellsHeading">
+            <div class="spell-selection-heading">
+                <h2 id="selectedSpellsHeading">Selected spells</h2>
+                <p id="selectionStatus" class="results-bar" aria-live="polite">0 of 8 spells selected</p>
+            </div>
+            <p id="emptySelection" class="no-results">Search for a spell to add it here.</p>
+            <div id="selectedSpells" class="spell-grid" aria-live="polite"></div>
+        </section>
     </main>
     <script src="../Javascript/Spell-Display.js"></script>
 </body>

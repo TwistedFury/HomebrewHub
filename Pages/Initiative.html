@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Initiative Tracker</title>
+        <style>
+            body { font-family: sans-serif; margin: 20px; }
+            form { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end; margin-bottom: 20px; }
+            label { display: flex; flex-direction: column; font-size: 0.9em; }
+            input[type="number"] { width: 70px; }
+            .creature { border: 1px solid #999; border-radius: 6px; padding: 10px; margin-bottom: 10px; }
+            .creature-header { display: flex; align-items: center; gap: 15px; margin-bottom: 8px; }
+            .initiative { font-size: 1.4em; font-weight: bold; min-width: 40px; text-align: center; }
+            .hp-list { display: flex; flex-wrap: wrap; gap: 10px; }
+            .hp-box { display: flex; flex-direction: column; align-items: center; font-size: 0.85em; }
+            .hp-box.down input { background-color: #f4b4b4; }
+            .hp-box.down span { text-decoration: line-through; }
+        </style>
+    </head>
+    <body>
+        <h2>Initiative!</h2>
+
+        <form id="creatureForm">
+            <label>
+                Name
+                <input type="text" id="creatureName" required>
+            </label>
+            <label>
+                Initiative
+                <input type="number" id="creatureInitiative" required>
+            </label>
+            <label>
+                HP
+                <input type="number" id="creatureHp" min="0" required>
+            </label>
+            <label>
+                Amount
+                <input type="number" id="creatureAmount" min="1" value="1" required>
+            </label>
+            <button type="submit">Add</button>
+            <button type="button" id="clearButton">Clear All</button>
+        </form>
+
+        <div id="initiativeList"></div>
+
+        <script src="../Javascript/initiative.js"></script>
+    </body>
+</html>

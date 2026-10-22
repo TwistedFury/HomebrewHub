@@ -357,6 +357,151 @@ tbody tr:hover {
   color: var(--muted);
 }
 
+.spell-display-page {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 2rem 1rem 3rem;
+}
+
+.spell-picker {
+  margin: 1.5rem 0 2rem;
+  padding: 1.25rem;
+  background: var(--bg-sunken);
+  border: 1px solid var(--line);
+}
+
+.spell-picker h2,
+.spell-selection h2 {
+  margin-top: 0;
+}
+
+.spell-picker label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-weight: bold;
+}
+
+.spell-picker input {
+  width: 100%;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--line);
+  background: var(--bg-paper);
+  color: var(--ink);
+  font: inherit;
+}
+
+.spell-search-results {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  gap: 0.5rem;
+  max-height: 22rem;
+  overflow-y: auto;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.spell-search-result {
+  display: flex;
+  width: 100%;
+  min-height: 3.5rem;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--line);
+  background: var(--bg-paper);
+  color: var(--ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.spell-search-result:hover:not(:disabled) {
+  border-color: var(--accent);
+  background: var(--bg-row-hover);
+}
+
+.spell-search-result:disabled {
+  color: var(--muted);
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.spell-search-result-name {
+  font-weight: bold;
+}
+
+.spell-search-result-detail {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.spell-selection-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.25rem 1rem;
+}
+
+.spell-selection-heading .results-bar {
+  margin: 0;
+}
+
+.spell-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  align-items: stretch;
+  gap: 1rem;
+}
+
+.spell-grid .spell-entry {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  padding: 1.25rem;
+}
+
+.spell-card-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.spell-card-heading h3 {
+  min-width: 0;
+  margin-top: 0;
+  overflow-wrap: anywhere;
+}
+
+.spell-remove-button {
+  flex: 0 0 auto;
+  padding: 0.3rem 0.55rem;
+  border: 1px solid var(--line);
+  background: var(--bg-paper);
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.spell-remove-button:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.spell-grid .spell-meta p {
+  overflow-wrap: anywhere;
+}
+
+.spell-grid .spell-body p {
+  margin-bottom: 0.75rem;
+}
+
+.spell-grid .spell-footer {
+  overflow-wrap: anywhere;
+}
+
 
 /* ── CAMPAIGN PAGE ──────────────────────────────────────────*/
 
