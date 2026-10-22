@@ -18,8 +18,19 @@ let currentSort = {
 
 let spellNum = 0;
 
+const schoolNames = {
+  A: "Abjuration",
+  C: "Conjuration",
+  D: "Divination",
+  E: "Enchantment",
+  I: "Illusion",
+  N: "Necromancy",
+  T: "Transmutation",
+  V: "Evocation"
+};
+
 function levelLabel(level) {
-  if (level === "Cantrip") return "Cantrip";
+  if (level === "0") return "Cantrip";
   if (level === "1") return "1st";
   if (level === "2") return "2nd";
   if (level === "3") return "3rd";
@@ -48,7 +59,10 @@ function renderTableRows(spellList) {
 
   for (const spell of spellList) {
     const row = document.createElement("tr");
-    const schools = [spell.school].flat().join(", ");
+    const schools = [spell.school]
+      .flat()
+      .map(school => schoolNames[school] || school)
+      .join(", ");
 
     row.innerHTML = `
       <td><a href="${spell.url}">${spell.name}</a></td>
@@ -111,10 +125,7 @@ function getFilteredSpells() {
   });
 }
 
-function levelRank(level) {
-  if (level === "Cantrip") return 0;
-  return parseInt(level, 10);
-}
+function levelRank(level) { return parseInt(level, 10); }
 
 function sortSpells(spellList) {
   return [...spellList].sort((a, b) => {
@@ -144,15 +155,70 @@ function clearFilters() {
   updateTable();
 }
 
+function formatTime(time) {
+  const value = time?.[0];
+  return value ? `${value.number} ${value.unit}` : "";
+}
+
+function formatRange(range) {
+  const distance = range?.distance;
+  if (!distance) return range?.type || "";
+  if (distance.type === "self") return "Self";
+  if (distance.type === "touch") return "Touch";
+  if (distance.amount === undefined) return distance.type || "";
+  return `${distance.amount} ${distance.type}`;
+}
+
+function formatDuration(duration) {
+  const value = duration?.[0];
+  if (!value) return "";
+  if (value.type === "instant") return "Instantaneous";
+  if (value.type === "permanent") return "Permanent";
+
+  const length = value.duration;
+  return length ? `${length.amount} ${length.type}` : value.type;
+}
+
+function normalizeSpell(spell) {
+  const duration = spell.duration || [];
+  const classes = spell.classes?.fromClassList || [];
+
+  return {
+    ...spell,
+    level: String(spell.level),
+    castingTime: formatTime(spell.time),
+    range: formatRange(spell.range),
+    duration: formatDuration(duration),
+    concentration: duration.some(entry => entry.concentration === true),
+    ritual: spell.meta?.ritual === true,
+    classes: classes.map(entry => entry.name),
+    url: `Spell-Display.html?name=${encodeURIComponent(spell.name)}`,
+  };
+}
+
+async function loadData(location) {
+  const response = await fetch(location);
+  if (!response.ok) {
+    throw new Error(`Failed to load ${location} (${response.status})`);
+  }
+
+  const data = await response.json();
+  if (!Array.isArray(data.spell)) {
+    throw new Error(`Invalid spell data in ${location}`);
+  }
+
+  return data.spell.map(normalizeSpell);
+}
+
 async function loadSpells() {
   try {
-    const response = await fetch("Data/Spells.json");
+    const spellLists = await Promise.all([
+      loadData("../Data/spells-phb.json"),
+      loadData("../Data/spells-scag.json"),
+      loadData("../Data/spells-xge.json")
+    ]);
 
-    if (!response.ok) {
-      throw new Error(`Failed to load spells.json (${response.status})`);
-    }
-
-    spells = await response.json();
+    spells = spellLists.flat();
     updateTable();
     spellNum = spells.length;
   } catch (error) {
