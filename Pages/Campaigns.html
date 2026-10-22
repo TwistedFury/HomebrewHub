@@ -13,6 +13,41 @@
         </article>
     </main>
 
-    <script src="../Javascript/campaigns.js"></script>
+    <form id="campaign-form" class="campaign-form" aria-label="Campaign Form">
+        <div class="campaign-form-heading">
+            <p class="eyebrow">Build your world</p>
+            <h2>Create a Campaign</h2>
+            <p>Bring your next adventure to life and share it with your party.</p>
+        </div>
+
+        <div>
+            <label for="campaign-name">Campaign Name:</label>
+            <input type="text" id="campaign-name" name="campaign-name" required>
+        </div>
+
+        <div>
+            <label for="campaign-dm">Dungeon Master:</label>
+            <input type="text" id="campaign-dm" name="campaign-dm" required>
+        </div>
+
+        <div>
+            <label for="campaign-level">Character Level:</label>
+            <input type="number" id="campaign-level" name="campaign-level" min="1" max="20" required>
+        </div>
+
+        <div>
+            <label for="campaign-description">Campaign Description:</label>
+            <textarea id="campaign-description" name="campaign-description" required></textarea>
+        </div>
+
+        <div>
+            <label for="campaign-players">Players (comma-separated):</label>
+            <input type="text" id="campaign-players" name="campaign-players" required>
+        </div>
+
+        <button type="submit">Create Campaign</button>
+    </form>
+
+    <script src="../Javascript/Campaigns.js"></script>
 </body>
 </html>

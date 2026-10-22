@@ -503,6 +503,217 @@ tbody tr:hover {
 }
 
 
+/* ── CAMPAIGN PAGE ──────────────────────────────────────────*/
+
+.campaign-page {
+  max-width: 1040px;
+  margin: 0 auto 2rem;
+  padding: 1rem 1rem 0;
+}
+
+#campaign-portfolio {
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--accent) 8%, transparent), transparent 55%),
+    var(--bg-paper);
+  border: 1px solid var(--line);
+  border-top: 4px solid var(--accent);
+  border-radius: 10px;
+  box-shadow: 0 10px 28px var(--shadow);
+  padding: 2rem 2.25rem;
+}
+
+#campaign-portfolio h1 {
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+}
+
+#campaign-portfolio p {
+  max-width: 70ch;
+  color: var(--muted);
+}
+
+#campaign-portfolio ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 0.75rem;
+  list-style: none;
+  margin: 1.25rem 0 0;
+  padding: 0;
+}
+
+#campaign-portfolio li {
+  margin: 0;
+}
+
+#campaign-portfolio li a {
+  display: block;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: var(--bg);
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+#campaign-portfolio li a:hover {
+  border-color: var(--accent);
+  box-shadow: 0 5px 14px var(--shadow);
+  text-decoration: none;
+  transform: translateY(-2px);
+}
+
+#campaign-portfolio dl {
+  display: grid;
+  grid-template-columns: minmax(9rem, auto) 1fr;
+  margin-top: 1.5rem;
+  border-top: 1px solid var(--line);
+}
+
+#campaign-portfolio dt,
+#campaign-portfolio dd {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+#campaign-portfolio dt {
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.campaign-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.15rem 1.25rem;
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 2rem 2.25rem;
+  background: var(--bg-paper);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: 0 10px 28px var(--shadow);
+}
+
+.campaign-form-heading,
+.campaign-form > div:nth-of-type(5),
+.campaign-form button {
+  grid-column: 1 / -1;
+}
+
+.campaign-form-heading {
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.campaign-form-heading h2 {
+  margin: 0.15rem 0 0.25rem;
+  font-size: 1.65rem;
+}
+
+.campaign-form-heading p:last-child {
+  margin: 0;
+  color: var(--muted);
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--accent);
+  font-size: 0.75rem;
+  font-weight: bold;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.campaign-form label {
+  display: block;
+  margin-bottom: 0.4rem;
+  color: var(--ink);
+  font-size: 0.92rem;
+  font-weight: bold;
+}
+
+.campaign-form input,
+.campaign-form textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: var(--bg);
+  color: var(--ink);
+  font: inherit;
+  padding: 0.7rem 0.8rem;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.campaign-form textarea {
+  min-height: 7rem;
+  resize: vertical;
+}
+
+.campaign-form input:focus,
+.campaign-form textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
+  outline: none;
+}
+
+.campaign-form button {
+  justify-self: start;
+  border: 1px solid var(--accent);
+  border-radius: 5px;
+  background: var(--accent);
+  color: var(--bg-paper);
+  cursor: pointer;
+  font: inherit;
+  font-weight: bold;
+  padding: 0.75rem 1.4rem;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.campaign-form button:hover {
+  background: var(--accent-hi);
+  transform: translateY(-1px);
+}
+
+.campaign-form button:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  outline-offset: 2px;
+}
+
+@media (max-width: 650px) {
+  body {
+    padding: 1rem;
+  }
+
+  .campaign-page {
+    padding: 0;
+  }
+
+  #campaign-portfolio,
+  .campaign-form {
+    padding: 1.35rem;
+  }
+
+  .campaign-form {
+    grid-template-columns: 1fr;
+  }
+
+  .campaign-form-heading,
+  .campaign-form > div:nth-of-type(5),
+  .campaign-form button {
+    grid-column: auto;
+  }
+
+  #campaign-portfolio dl {
+    grid-template-columns: 1fr;
+  }
+
+  #campaign-portfolio dt {
+    padding-bottom: 0.15rem;
+    border-bottom: 0;
+  }
+}
+
+
 /* ============================================================
    HOME PAGE
    Scoped to body.home-page — zero effect on other pages.

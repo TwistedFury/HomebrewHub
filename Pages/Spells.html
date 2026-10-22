@@ -1,47 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Fortissax's Lightning Spear</title>
-    <meta name="description" content="Fortissax's Lightning Spear spell.">
-    <meta name="author" content="Nicholas Beaty">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="description" content="HOLY SPELL LIST">
+        <meta name="author" content="Cody Owens">
+        <title>Homebrew Hub - Spells Page</title>
 
-    <link rel="stylesheet" type="text/css" href="../styles.css">
-</head>
-<body>
-    <main class="spell-page">
-        <article class="spell-entry">
-            <h1>Fortissax's Lightning Spear</h1>
-            <p class="spell-subtitle"><em>8th Level Dragon Cult Incantation or Evocation</em></p>
+        <link rel = "stylesheet" href = "../styles.css" />
+    </head>
+    <body>
+  <main class="page-shell">
+    <section class="page-card">
+      <h1>Spells</h1>
+      <p class="intro">
+        Browse all spells in the wiki. Use the filters below to narrow the list,
+        then click a spell name to open its full entry.
+      </p>
 
-            <section class="spell-meta">
-                <p><strong>Casting Time:</strong> 1 Action</p>
-                <p><strong>Range:</strong> Self (25ft Radius)</p>
-                <p><strong>Components:</strong> V, S</p>
-                <p><strong>Duration:</strong> Instantaneous</p>
-            </section>
+      <section class="filters">
+        <div>
+          <label for="searchInput">Search by Name</label>
+          <input type="text" id="searchInput" placeholder="Search spells..." />
+        </div>
 
-            <hr>
+        <div>
+          <label for="levelFilter">Level</label>
+          <select id="levelFilter">
+            <option value="">All Levels</option>
+            <option value="0">Cantrip</option>
+            <option value="1">1st</option>
+            <option value="2">2nd</option>
+            <option value="3">3rd</option>
+            <option value="4">4th</option>
+            <option value="5">5th</option>
+            <option value="6">6th</option>
+            <option value="7">7th</option>
+            <option value="8">8th</option>
+            <option value="9">9th</option>
+          </select>
+        </div>
 
-            <section class="spell-body">
-                <p>
-                    Channeling the pinnacle of ancient dragon magic, you summon two massive spears and slam them into the ground. All creatures within 25 feet of you must make two dexterity saving throws, taking 8d6 AD Lightning damage per failure, or half as much of each on a success.
-                </p>
+        <div>
+          <label for="schoolFilter">School</label>
+          <select id="schoolFilter">
+            <option value="">All Schools</option>
+            <option value="A">Abjuration</option>
+            <option value="C">Conjuration</option>
+            <option value="D">Divination</option>
+            <option value="E">Enchantment</option>
+            <option value="V">Evocation</option>
+            <option value="I">Illusion</option>
+            <option value="N">Necromancy</option>
+            <option value="T">Transmutation</option>
+          </select>
+        </div>
 
-                <p>
-                    A creature that fails the first of the two saving throws has disadvantage on the second.
-                </p>
+        <div>
+          <label for="ritualFilter">Ritual</label>
+          <select id="ritualFilter">
+            <option value="">Any</option>
+            <option value="true">Ritual Only</option>
+            <option value="false">Non-Ritual</option>
+          </select>
+        </div>
 
-                <p>
-                    <b>At Higher Levels:</b> When you cast this spell at 9th level, the damage increases to 10d6 for both saves, and the radius increases to 30 feet.
-                </p>
+        <div>
+          <label for="concentrationFilter">Concentration</label>
+          <select id="concentrationFilter">
+            <option value="">Any</option>
+            <option value="true">Concentration Only</option>
+            <option value="false">Non-Concentration</option>
+          </select>
+        </div>
 
-            </section>
+        <div>
+          <label for="classFilter">Class</label>
+          <select id="classFilter">
+            <option value="">All Classes</option>
+            <option value="Bard">Bard</option>
+            <option value="Cleric">Cleric</option>
+            <option value="Druid">Druid</option>
+            <option value="Paladin">Paladin</option>
+            <option value="Ranger">Ranger</option>
+            <option value="Sorcerer">Sorcerer</option>
+            <option value="Warlock">Warlock</option>
+            <option value="Wizard">Wizard</option>
+          </select>
+        </div>
 
-            <section class="spell-footer">
-                <p><strong>Spell Lists:</strong> Cleric, Druid</p>
-            </section>
-        </article>
-    </main>
+        <div class="filter-actions">
+          <button id="clearFilters" type="button">Clear Filters</button>
+        </div>
+      </section>
+
+      <div class="results-bar">
+        <span id="resultsCount">Loading spells...</span>
+      </div>
+
+      <div class="table-wrap">
+        <table id="spellsTable">
+          <thead>
+            <tr>
+              <th data-sort="name">Spell Name</th>
+              <th data-sort="level">Level</th>
+              <th data-sort="school">School</th>
+              <th data-sort="castingTime">Casting Time</th>
+              <th data-sort="range">Range</th>
+              <th data-sort="duration">Duration</th>
+              <th data-sort="ritual">Ritual</th>
+              <th data-sort="concentration">Concentration</th>
+              <th data-sort="classes">Classes</th>
+            </tr>
+          </thead>
+          <tbody id="spellsTableBody"></tbody>
+        </table>
+      </div>
+
+      <div id="noResults" class="no-results" hidden>
+        No spells matched the current filters.
+      </div>
+    </section>
+  </main>
+
+  <script src="../Javascript/Spells-Json.js"></script>
 </body>
 </html>
