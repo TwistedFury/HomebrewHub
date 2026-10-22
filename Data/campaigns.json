@@ -21,5 +21,13 @@
         "description": "Test",
         "player_count": 1,
         "campaign_id": "campaign-f9b2cb15"
+    },
+    {
+        "name": "2",
+        "dm": "2",
+        "character_level": 2,
+        "description": "2",
+        "player_count": 2,
+        "campaign_id": "campaign-8b899c89"
     }
 ]
