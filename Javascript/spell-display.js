@@ -1,5 +1,6 @@
 const MAX_SELECTED_SPELLS = 8;
 const MAX_SEARCH_RESULTS = 20;
+const COLLAPSE_THRESHOLD = 500;
 const searchInput = document.getElementById("spellSearch");
 const searchStatus = document.getElementById("searchStatus");
 const searchResults = document.getElementById("spellSearchResults");
@@ -20,6 +21,7 @@ const schoolNames = {
 
 let spells = [];
 let selectedSpells = [];
+let spellBodyId = 0;
 
 function formatText(value) {
   const text = value && typeof value === "object" && typeof value.text === "string"
@@ -198,9 +200,28 @@ function renderSpellCard(spell) {
     body.appendChild(higherLevels);
   }
 
+  const expandButton = document.createElement("button");
+  const isLongSpell = body.textContent.trim().length > COLLAPSE_THRESHOLD;
+  if (isLongSpell) {
+    body.id = `spell-body-${spellBodyId++}`;
+    body.classList.add("spell-body-collapsed");
+    expandButton.type = "button";
+    expandButton.className = "spell-expand-button";
+    expandButton.textContent = "Show more";
+    expandButton.setAttribute("aria-expanded", "false");
+    expandButton.setAttribute("aria-controls", body.id);
+    expandButton.addEventListener("click", () => {
+      const isCollapsed = body.classList.toggle("spell-body-collapsed");
+      expandButton.textContent = isCollapsed ? "Show more" : "Show less";
+      expandButton.setAttribute("aria-expanded", String(!isCollapsed));
+    });
+  }
+
   footer.className = "spell-footer";
   footer.textContent = `Spell Lists: ${classes || "No class list"}${spell.source ? ` · Source: ${spell.source}` : ""}`;
-  card.append(heading, subtitle, meta, body, footer);
+  card.append(heading, subtitle, meta, body);
+  if (isLongSpell) card.appendChild(expandButton);
+  card.appendChild(footer);
   return card;
 }
 

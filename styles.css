@@ -450,9 +450,21 @@ tbody tr:hover {
 
 .spell-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   align-items: stretch;
   gap: 1rem;
+}
+
+@media (max-width: 1200px) {
+  .spell-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .spell-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 .spell-grid .spell-entry {
@@ -496,6 +508,25 @@ tbody tr:hover {
 
 .spell-grid .spell-body p {
   margin-bottom: 0.75rem;
+}
+
+.spell-grid .spell-body-collapsed {
+  max-height: 14rem;
+  overflow: hidden;
+}
+
+.spell-expand-button {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font: inherit;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.spell-expand-button:hover {
+  text-decoration: underline;
 }
 
 .spell-grid .spell-footer {
@@ -682,6 +713,10 @@ tbody tr:hover {
 @media (max-width: 650px) {
   body {
     padding: 1rem;
+  }
+
+  .spell-grid {
+    grid-template-columns: 1fr;
   }
 
   .campaign-page {
