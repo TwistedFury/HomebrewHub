@@ -1,5 +1,6 @@
 const searchInput = document.getElementById("searchInput");
 const levelFilter = document.getElementById("levelFilter");
+const sourceFilter = document.getElementById("sourceFilter");
 const schoolFilter = document.getElementById("schoolFilter");
 const ritualFilter = document.getElementById("ritualFilter");
 const concentrationFilter = document.getElementById("concentrationFilter");
@@ -83,6 +84,7 @@ function renderTableRows(spellList) {
 function getFilteredSpells() {
   const search = normalize(searchInput.value);
   const selectedLevel = levelFilter.value;
+  const selectedSource = sourceFilter.value;
   const selectedSchool = schoolFilter.value;
   const selectedRitual = ritualFilter.value;
   const selectedConcentration = concentrationFilter.value;
@@ -96,6 +98,10 @@ function getFilteredSpells() {
     const matchesLevel =
       !selectedLevel ||
       spell.level === selectedLevel;
+
+    const matchesSource =
+      !selectedSource ||
+      spell.source === selectedSource;
 
     // Changing the system to allow for multiple schools in the spell entry in
     // the JSON file.
@@ -117,6 +123,7 @@ function getFilteredSpells() {
     return (
       matchesSearch &&
       matchesLevel &&
+      matchesSource &&
       matchesSchool &&
       matchesRitual &&
       matchesConcentration &&
@@ -129,12 +136,8 @@ function levelRank(level) { return parseInt(level, 10); }
 
 function sortSpells(spellList) {
   return [...spellList].sort((a, b) => {
-
-    // Primary sort: level
     const levelDiff = levelRank(a.level) - levelRank(b.level);
     if (levelDiff !== 0) return levelDiff;
-
-    // Secondary sort: alphabetical by name
     return a.name.localeCompare(b.name);
   });
 }
@@ -148,6 +151,7 @@ function updateTable() {
 function clearFilters() {
   searchInput.value = "";
   levelFilter.value = "";
+  sourceFilter.value = "";
   schoolFilter.value = "";
   ritualFilter.value = "";
   concentrationFilter.value = "";
@@ -231,6 +235,7 @@ async function loadSpells() {
 
 searchInput.addEventListener("input", updateTable);
 levelFilter.addEventListener("change", updateTable);
+sourceFilter.addEventListener("change", updateTable);
 schoolFilter.addEventListener("change", updateTable);
 ritualFilter.addEventListener("change", updateTable);
 concentrationFilter.addEventListener("change", updateTable);
