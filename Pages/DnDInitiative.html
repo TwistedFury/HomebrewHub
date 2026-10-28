@@ -4,46 +4,86 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="../styles.css">
-        <title>Initiative Tracker</title>
-        <style>
-            body { font-family: sans-serif; margin: 20px; }
-            form { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end; margin-bottom: 20px; }
-            label { display: flex; flex-direction: column; font-size: 0.9em; }
-            input[type="number"] { width: 70px; }
-            .creature { border: 1px solid #999; border-radius: 6px; padding: 10px; margin-bottom: 10px; }
-            .creature-header { display: flex; align-items: center; gap: 15px; margin-bottom: 8px; }
-            .initiative { font-size: 1.4em; font-weight: bold; min-width: 40px; text-align: center; }
-            .hp-list { display: flex; flex-wrap: wrap; gap: 10px; }
-            .hp-box { display: flex; flex-direction: column; align-items: center; font-size: 0.85em; }
-            .hp-box.down input { background-color: #f4b4b4; }
-            .hp-box.down span { text-decoration: line-through; }
-        </style>
+        <title>Homebrew Hub - Initiative Tracker</title>
     </head>
     <body>
-        <h2>Initiative!</h2>
+        <main class="page-shell initiative-page">
+            <section class="page-card">
+                <a class="back-btn" href="../homePage.html">Home</a>
 
-        <form id="creatureForm">
-            <label>
-                Name
-                <input type="text" id="creatureName" required>
-            </label>
-            <label>
-                Initiative
-                <input type="number" id="creatureInitiative" required>
-            </label>
-            <label>
-                HP
-                <input type="number" id="creatureHp" min="0" required>
-            </label>
-            <label>
-                Amount
-                <input type="number" id="creatureAmount" min="1" value="1" required>
-            </label>
-            <button type="submit">Add</button>
-            <button type="button" id="clearButton">Clear All</button>
-        </form>
+                <h1>Initiative Tracker</h1>
+                <p class="intro">
+                    Add creatures to the encounter and they'll be sorted by initiative.
+                    Groups get one HP box per creature, so you can track each goblin separately.
+                </p>
 
-        <div id="initiativeList"></div>
+                <form id="creatureForm" class="initiative-form">
+                    <div class="initiative-field initiative-field-name">
+                        <label for="creatureName">Name</label>
+                        <input type="text" id="creatureName" placeholder="Goblin" required>
+                    </div>
+                    <div class="initiative-field">
+                        <label for="creatureInitiative">Initiative</label>
+                        <input type="number" id="creatureInitiative" step="any" required>
+                    </div>
+                    <div class="initiative-field">
+                        <label for="creatureHp">HP</label>
+                        <input type="number" id="creatureHp" min="0" required>
+                        <label class="initiative-check" for="creatureIsPlayer">
+                            <input type="checkbox" id="creatureIsPlayer">
+                            Player Character
+                        </label>
+                    </div>
+                    <div class="initiative-field">
+                        <label for="creatureAc">AC <span class="optional">(optional)</span></label>
+                        <input type="number" id="creatureAc" min="0">
+                        <label class="initiative-check" for="creatureIsVehicle">
+                            <input type="checkbox" id="creatureIsVehicle">
+                            Vehicle
+                        </label>
+                    </div>
+                    <div class="initiative-field">
+                        <label for="creatureAmount">Amount</label>
+                        <input type="number" id="creatureAmount" min="1" value="1" required>
+                        <label class="initiative-check" for="creatureIsBoss">
+                            <input type="checkbox" id="creatureIsBoss">
+                            Boss Monster
+                        </label>
+                    </div>
+                    <div id="bossFields" class="boss-fields" hidden>
+                        <div class="initiative-field">
+                            <label for="creatureLegendaryActions">Legendary Actions</label>
+                            <input type="number" id="creatureLegendaryActions" min="0" value="3">
+                        </div>
+                        <div class="initiative-field">
+                            <label for="creatureLegendaryResistances">Legendary Resistances</label>
+                            <input type="number" id="creatureLegendaryResistances" min="0" value="3">
+                        </div>
+                    </div>
+                    <div id="vehicleFields" class="boss-fields" hidden>
+                        <div class="initiative-field">
+                            <label for="creatureDamageThreshold">Damage Threshold</label>
+                            <input type="number" id="creatureDamageThreshold" min="0">
+                        </div>
+                    </div>
+                    <div class="initiative-actions">
+                        <button type="submit" class="initiative-btn">Add</button>
+                        <button type="button" id="clearButton" class="initiative-btn initiative-btn-secondary">Clear All</button>
+                    </div>
+                </form>
+
+                <div class="combat-bar">
+                    <span id="roundDisplay" class="round-display">Not in combat</span>
+                    <label class="initiative-check combat-option" for="groupPlayers">
+                        <input type="checkbox" id="groupPlayers" checked>
+                        Player Groups (combine players who go back to back)
+                    </label>
+                    <button type="button" id="combatButton" class="initiative-btn">Start Combat</button>
+                </div>
+
+                <div id="initiativeList" class="initiative-list"></div>
+            </section>
+        </main>
 
         <script src="../Javascript/initiative.js"></script>
     </body>
