@@ -3,9 +3,14 @@
 // Player characters have a single hp value, which is null when no HP was entered
 // ac holds one value per individual too (players have one); null means no AC was entered
 // Vehicles also carry damageThreshold: one value per individual, damage below it is ignored
+// type and size come from the 5e lists in the form (type can also be custom text, e.g. "Fiend (Demon)")
+// isPlayerControlled marks summons, companions and the like: they work like regular creatures
+// (groups, HP, damage) but are on the players' side, so they're purple and win ties like players
 // Regular enemies also get identifiers: one optional note per individual ("red cloak", "on the left")
 // Monsters keep selected: one flag per individual, marking who the next "Apply Damage" hits
 // Bosses also carry legendaryActions and legendaryResistances: { max, current }
+// Lairs are their own kind of entry: always named "Lair" on initiative 20, no HP/AC, and they carry
+// lairActions: [{ identifier, usedRound }]. A used action comes back two rounds later (used on 1 -> back on 3)
 let creatures = [];
 let nextId = 1;
 
@@ -30,10 +35,60 @@ const legendaryResistancesInput = document.getElementById("creatureLegendaryResi
 const vehicleCheckbox = document.getElementById("creatureIsVehicle");
 const vehicleFields = document.getElementById("vehicleFields");
 const damageThresholdInput = document.getElementById("creatureDamageThreshold");
+const playerControlledCheckbox = document.getElementById("creatureIsPlayerControlled");
+const typeSelect = document.getElementById("creatureType");
+const customTypeInput = document.getElementById("creatureCustomType");
+const sizeSelect = document.getElementById("creatureSize");
+const nameInput = document.getElementById("creatureName");
+const initiativeInput = document.getElementById("creatureInitiative");
+const lairCheckbox = document.getElementById("creatureIsLair");
+const lairFields = document.getElementById("lairFields");
+const lairActionsInput = document.getElementById("creatureLairActions");
+
+const LAIR_NAME = "Lair";
+const LAIR_INITIATIVE = 20;
+
+// Clears the form back to its defaults after adding something
+function resetForm()
+{
+    form.reset();
+    amountInput.value = 1;
+    updateTypeFields();
+    updateCustomType();
+    nameInput.focus();
+
+    render();
+}
+
+function addLair()
+{
+    const actionCount = parseInt(lairActionsInput.value);
+
+    if (isNaN(actionCount) || actionCount < 1)
+    {
+        return;
+    }
+
+    creatures.push({
+        id: nextId++,
+        name: LAIR_NAME,
+        initiative: LAIR_INITIATIVE,
+        isLair: true,
+        lairActions: Array.from({ length: actionCount }, () => ({ identifier: "", usedRound: null }))
+    });
+
+    resetForm();
+}
 
 form.addEventListener("submit", function (event)
 {
     event.preventDefault();
+
+    if (lairCheckbox.checked)
+    {
+        addLair();
+        return;
+    }
 
     const name = document.getElementById("creatureName").value.trim();
     // Initiative can be a decimal so ties can be broken by hand (e.g. 15.5 goes before 15)
@@ -47,9 +102,14 @@ form.addEventListener("submit", function (event)
     const legendaryActions = parseInt(legendaryActionsInput.value);
     const legendaryResistances = parseInt(legendaryResistancesInput.value);
     const isVehicle = vehicleCheckbox.checked;
-    const damageThreshold = parseInt(damageThresholdInput.value);
+    const isPlayerControlled = playerControlledCheckbox.checked;
+    const isCustomType = typeSelect.value === "custom";
+    const type = isCustomType ? customTypeInput.value.trim() : typeSelect.value;
+    // Damage threshold is optional and defaults to 0
+    const parsedThreshold = parseInt(damageThresholdInput.value);
+    const damageThreshold = isNaN(parsedThreshold) ? 0 : Math.max(0, parsedThreshold);
 
-    if (!name || isNaN(initiative))
+    if (!name || isNaN(initiative) || !type)
     {
         return;
     }
@@ -59,7 +119,8 @@ form.addEventListener("submit", function (event)
         return;
     }
 
-    if (isVehicle && (isNaN(damageThreshold) || damageThreshold < 0))
+    // Everyone except players must have an AC
+    if (!isPlayer && ac === null)
     {
         return;
     }
@@ -79,6 +140,10 @@ form.addEventListener("submit", function (event)
         isPlayer: isPlayer,
         isBoss: isBoss,
         isVehicle: isVehicle,
+        isPlayerControlled: isPlayerControlled,
+        type: type,
+        isCustomType: isCustomType,
+        size: sizeSelect.value,
         hp: Array(count).fill(isNaN(hp) ? null : hp),
         ac: Array(count).fill(ac)
     };
@@ -105,13 +170,7 @@ form.addEventListener("submit", function (event)
     }
 
     creatures.push(creature);
-
-    form.reset();
-    amountInput.value = 1;
-    updateTypeFields();
-    document.getElementById("creatureName").focus();
-
-    render();
+    resetForm();
 });
 
 // HP is optional for players, players and bosses are always a single creature, and the
@@ -121,10 +180,38 @@ function updateTypeFields()
     const isPlayer = playerCheckbox.checked;
     const isBoss = bossCheckbox.checked;
     const isVehicle = vehicleCheckbox.checked;
+    const isPlayerControlled = playerControlledCheckbox.checked;
+    const isLair = lairCheckbox.checked;
+
+    // A lair has a fixed name and initiative and no stats, so lock all of that while it's checked
+    if (isLair)
+    {
+        nameInput.value = LAIR_NAME;
+        initiativeInput.value = LAIR_INITIATIVE;
+        hpInput.value = "";
+        acInput.value = "";
+    }
+    else if (nameInput.disabled)
+    {
+        // Just unticked Lair: clear the locked values out
+        nameInput.value = "";
+        initiativeInput.value = "";
+    }
+
+    for (const input of [nameInput, initiativeInput, hpInput, acInput, typeSelect, customTypeInput, sizeSelect])
+    {
+        input.disabled = isLair;
+    }
+
+    lairFields.hidden = !isLair;
+    lairActionsInput.required = isLair;
 
     hpInput.required = !isPlayer;
     hpInput.placeholder = isPlayer ? "Optional" : "";
-    amountInput.disabled = isPlayer || isBoss;
+    acInput.placeholder = isPlayer ? "Optional" : "";
+    // AC is only optional for players
+    acInput.required = !isPlayer;
+    amountInput.disabled = isPlayer || isBoss || isLair;
     amountInput.required = !amountInput.disabled;
 
     if (amountInput.disabled)
@@ -132,22 +219,50 @@ function updateTypeFields()
         amountInput.value = 1;
     }
 
-    // A player can't be a boss or a vehicle, and a boss or vehicle can't be a player
-    playerCheckbox.disabled = isBoss || isVehicle;
-    bossCheckbox.disabled = isPlayer;
-    vehicleCheckbox.disabled = isPlayer;
+    // Players can't be anything else, player-controlled creatures can't be bosses,
+    // vehicles can't be bosses either, and a lair can't be anything else
+    playerCheckbox.disabled = isBoss || isVehicle || isPlayerControlled || isLair;
+    playerControlledCheckbox.disabled = isPlayer || isBoss || isLair;
+    bossCheckbox.disabled = isPlayer || isVehicle || isPlayerControlled || isLair;
+    vehicleCheckbox.disabled = isPlayer || isBoss || isLair;
+    lairCheckbox.disabled = isPlayer || isPlayerControlled || isVehicle || isBoss;
 
     bossFields.hidden = !isBoss;
     legendaryActionsInput.required = isBoss;
     legendaryResistancesInput.required = isBoss;
 
     vehicleFields.hidden = !isVehicle;
-    damageThresholdInput.required = isVehicle;
 }
 
 playerCheckbox.addEventListener("change", updateTypeFields);
 bossCheckbox.addEventListener("change", updateTypeFields);
 vehicleCheckbox.addEventListener("change", updateTypeFields);
+playerControlledCheckbox.addEventListener("change", updateTypeFields);
+lairCheckbox.addEventListener("change", updateTypeFields);
+
+// The custom type box only shows (and is only required) when "Custom..." is picked
+function updateCustomType()
+{
+    const isCustom = typeSelect.value === "custom";
+
+    customTypeInput.hidden = !isCustom;
+    customTypeInput.required = isCustom;
+
+    if (!isCustom)
+    {
+        customTypeInput.value = "";
+    }
+}
+
+typeSelect.addEventListener("change", () =>
+{
+    updateCustomType();
+
+    if (typeSelect.value === "custom")
+    {
+        customTypeInput.focus();
+    }
+});
 groupPlayersCheckbox.addEventListener("change", render);
 
 document.getElementById("clearButton").addEventListener("click", function ()
@@ -170,8 +285,10 @@ combatButton.addEventListener("click", function ()
 
 function sortCreatures()
 {
-    // Highest initiative goes first, and players win ties against non-players
-    creatures.sort((a, b) => b.initiative - a.initiative || b.isPlayer - a.isPlayer);
+    // Highest initiative goes first. On ties the players' side (players and the creatures they
+    // control) goes first, and lairs go last
+    const tiePriority = c => c.isPlayer || c.isPlayerControlled ? 1 : (c.isLair ? -1 : 0);
+    creatures.sort((a, b) => b.initiative - a.initiative || tiePriority(b) - tiePriority(a));
 }
 
 // Splits the initiative order into turns. Normally each creature is its own turn, but in
@@ -213,6 +330,16 @@ function startCombat()
     sortCreatures();
     round = 1;
     currentId = creatures[0].id;
+
+    // Every lair action starts the fight ready to use
+    for (const creature of creatures)
+    {
+        if (creature.isLair)
+        {
+            creature.lairActions.forEach(action => action.usedRound = null);
+        }
+    }
+
     render();
 }
 
@@ -611,6 +738,7 @@ function renderCreatureCard(creature, isCurrent)
     card.classList.toggle("player", creature.isPlayer);
     card.classList.toggle("boss", creature.isBoss);
     card.classList.toggle("vehicle", creature.isVehicle);
+    card.classList.toggle("player-controlled", creature.isPlayerControlled);
     card.classList.toggle("current-turn", isCurrent);
 
     const header = document.createElement("div");
@@ -630,6 +758,19 @@ function renderCreatureCard(creature, isCurrent)
         name.appendChild(createBossTag());
     }
 
+    if (creature.isPlayerControlled)
+    {
+        const tag = document.createElement("span");
+        tag.className = "creature-tag player-controlled-tag";
+        tag.textContent = "PLAYER CONTROLLED";
+        name.appendChild(tag);
+    }
+
+    // Stat block style line, e.g. "Medium humanoid"
+    const details = document.createElement("span");
+    details.className = "creature-meta";
+    details.textContent = `${creature.size} ${creature.isCustomType ? creature.type : creature.type.toLowerCase()}`;
+
     if (creature.isVehicle)
     {
         const tag = document.createElement("span");
@@ -646,6 +787,7 @@ function renderCreatureCard(creature, isCurrent)
         name.appendChild(count);
     }
 
+    name.appendChild(details);
     header.append(createInitiativeInput(creature, "initiative"), name);
 
     if (isCurrent)
@@ -744,6 +886,95 @@ function renderCreatureCard(creature, isCurrent)
     return card;
 }
 
+// A used lair action comes back on the round after next (used on round 1 -> available on round 3)
+function isLairActionAvailable(action)
+{
+    return action.usedRound === null || round >= action.usedRound + 2;
+}
+
+// Green AVAILABLE / red USED switch; clicking an available action spends it this round,
+// clicking a used one puts it back (for mis-clicks)
+function createLairActionToggle(action)
+{
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "lair-toggle";
+
+    const available = isLairActionAvailable(action);
+    button.classList.toggle("available", available);
+    button.textContent = available ? "AVAILABLE" : `USED — back round ${action.usedRound + 2}`;
+    button.title = available ? "Click to use this round" : "Click to undo";
+
+    button.addEventListener("click", () =>
+    {
+        action.usedRound = isLairActionAvailable(action) ? round : null;
+        render();
+    });
+
+    return button;
+}
+
+function renderLairCard(lair, isCurrent)
+{
+    const card = document.createElement("div");
+    card.className = "creature lair";
+    card.classList.toggle("current-turn", isCurrent);
+
+    const header = document.createElement("div");
+    header.className = "creature-header";
+
+    const name = document.createElement("h3");
+    name.className = "creature-name";
+    name.textContent = lair.name;
+
+    const tag = document.createElement("span");
+    tag.className = "creature-tag lair-tag";
+    tag.textContent = "LAIR";
+    name.appendChild(tag);
+
+    // Lair initiative is locked, so it gets a plain badge instead of an editable one
+    header.append(createInitiativeBadge(lair.initiative), name);
+
+    if (isCurrent)
+    {
+        header.appendChild(createNextButton());
+    }
+
+    header.appendChild(createRemoveButton(lair.id));
+
+    const actions = document.createElement("ol");
+    actions.className = "lair-actions";
+
+    lair.lairActions.forEach((action, index) =>
+    {
+        const row = document.createElement("li");
+        row.className = "lair-action";
+
+        const number = document.createElement("span");
+        number.className = "lair-action-number";
+        number.textContent = index + 1;
+
+        const identifier = document.createElement("input");
+        identifier.type = "text";
+        identifier.className = "hp-box-identifier lair-action-identifier";
+        identifier.placeholder = "Identifier";
+        identifier.value = action.identifier;
+        identifier.setAttribute("aria-label", `Identifier for lair action ${index + 1}`);
+
+        // Save edits back so they survive re-renders
+        identifier.addEventListener("input", () =>
+        {
+            action.identifier = identifier.value;
+        });
+
+        row.append(number, identifier, createLairActionToggle(action));
+        actions.appendChild(row);
+    });
+
+    card.append(header, actions);
+    return card;
+}
+
 function renderPlayerGroupCard(players, isCurrent)
 {
     const card = document.createElement("div");
@@ -813,13 +1044,26 @@ function render()
     {
         const isCurrent = turn.some(c => c.id === currentId);
 
-        const card = turn.length > 1
-            ? renderPlayerGroupCard(turn, isCurrent)
-            : renderCreatureCard(turn[0], isCurrent);
+        let card;
+
+        if (turn.length > 1)
+        {
+            card = renderPlayerGroupCard(turn, isCurrent);
+        }
+        else if (turn[0].isLair)
+        {
+            card = renderLairCard(turn[0], isCurrent);
+        }
+        else
+        {
+            card = renderCreatureCard(turn[0], isCurrent);
+        }
+
 
         list.appendChild(card);
     }
 }
 
 updateTypeFields();
+updateCustomType();
 render();

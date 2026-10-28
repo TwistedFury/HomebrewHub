@@ -767,6 +767,43 @@ tbody tr:hover {
   font-weight: normal;
 }
 
+.creature-details {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.creature-details label {
+  font-size: 0.8rem;
+}
+
+.creature-details select,
+.creature-details input {
+  width: 100%;
+  padding: 0.45rem 0.55rem;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--bg-paper);
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.9rem;
+}
+
+.creature-details select {
+  cursor: pointer;
+}
+
+.creature-details input {
+  margin-top: 0.35rem;
+}
+
+.creature-details select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
+  outline: none;
+}
+
 .initiative-field input:disabled {
   background: var(--bg-sunken);
   color: var(--muted);
@@ -1016,6 +1053,15 @@ tbody tr:hover {
   font-size: 0.85rem;
 }
 
+.creature-meta {
+  display: block;
+  margin-top: 0.1rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-style: italic;
+  font-weight: normal;
+}
+
 .creature-name {
   flex: 1;
   min-width: 0;
@@ -1064,6 +1110,82 @@ tbody tr:hover {
 
 .vehicle-tag {
   background: #4a6070;
+}
+
+.lair-tag {
+  background: #2f6f62;
+}
+
+.creature.lair:not(.current-turn) {
+  border-left-color: #2f6f62;
+}
+
+.lair-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin: 0.75rem 0 0;
+  padding: 0 0 0 3.65rem;
+  list-style: none;
+}
+
+.lair-action {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--bg-sunken);
+}
+
+.lair-action-number {
+  min-width: 1.25rem;
+  color: #2f6f62;
+  font-weight: bold;
+  text-align: center;
+}
+
+.lair-action-identifier {
+  flex: 1;
+  min-width: 0;
+}
+
+.lair-toggle {
+  flex: 0 0 auto;
+  min-width: 9.5rem;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid #b04a3a;
+  border-radius: 3px;
+  background: color-mix(in srgb, #b04a3a 16%, var(--bg-paper));
+  color: #b04a3a;
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s, color 0.12s;
+}
+
+.lair-toggle.available {
+  border-color: #3f8a4f;
+  background: color-mix(in srgb, #3f8a4f 18%, var(--bg-paper));
+  color: #3f8a4f;
+}
+
+.lair-toggle:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  outline-offset: 2px;
+}
+
+.player-controlled-tag {
+  background: #7a4fa8;
+}
+
+.creature.player-controlled:not(.current-turn) {
+  border-left-color: #7a4fa8;
+  background: color-mix(in srgb, #7a4fa8 7%, var(--bg-paper));
 }
 
 .creature.vehicle:not(.current-turn):not(.boss) {
@@ -1418,6 +1540,7 @@ tbody tr:hover {
   }
 
   .hp-list,
+  .lair-actions,
   .damage-row,
   .legendary-list,
   .player-group-members {
