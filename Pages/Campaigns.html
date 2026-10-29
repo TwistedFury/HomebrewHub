@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Campaign | Homebrew Hub</title>
     <link rel="stylesheet" href="../styles.css">
+    <link rel="icon" href="../Images/Shield.png" type="image/png">
 </head>
 <body>
     <header class="hp-topbar">
@@ -52,8 +53,9 @@
         </div>
 
         <div>
-            <label for="campaign-players">Players (comma-separated):</label>
-            <input type="text" id="campaign-players" name="campaign-players" required>
+            <label for="campaign-players">Player IDs (comma-separated):</label>
+            <input type="text" id="campaign-players" name="campaign-players"
+                placeholder="sample0-player-id, sample1-player-id">
         </div>
 
         <button type="submit">Create Campaign</button>

@@ -1,0 +1,30 @@
+[
+    {
+        "player_id": "sample0-player-id",
+        "name": "Alex Morgan",
+        "character_name": "Elara Brightwood",
+        "class": "Wizard",
+        "level": 1
+    },
+    {
+        "player_id": "sample1-player-id",
+        "name": "Jordan Lee",
+        "character_name": "Bram Ironhand",
+        "class": "Fighter",
+        "level": 1
+    },
+    {
+        "name": "Cody Owens",
+        "character_name": "Bongo Bongo",
+        "class": "Bard: College of Stories",
+        "level": 10,
+        "player_id": "player-58147d0c"
+    },
+    {
+        "name": "Cody Owens",
+        "character_name": "Thundrek Stormcaller",
+        "class": "Wizard",
+        "level": 11,
+        "player_id": "player-a4ba68d0"
+    }
+]
