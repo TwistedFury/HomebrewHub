@@ -38,7 +38,8 @@ function renderPlayers(players) {
         character.textContent = player.character_name;
 
         const details = document.createElement('dl');
-        [['Class', player.class], ['Level', player.level], ['Player ID', player.player_id]]
+        [['Class', player.class], ['Level', player.level], ['Max HP', player.max_hp],
+            ['Armor Class', player.ac], ['Player ID', player.player_id]]
             .forEach(([label, value]) => {
                 const term = document.createElement('dt');
                 term.textContent = label;
@@ -92,7 +93,9 @@ function showEditForm(card, player) {
         createPlayerInput('Player Name', 'name', player.name),
         createPlayerInput('Character Name', 'character_name', player.character_name),
         createPlayerInput('Class', 'class', player.class),
-        createPlayerInput('Level', 'level', player.level, 'number')
+        createPlayerInput('Level', 'level', player.level, 'number'),
+        createPlayerInput('Max HP', 'max_hp', player.max_hp, 'number'),
+        createPlayerInput('Armor Class', 'ac', player.ac, 'number')
     );
 
     const attributes = document.createElement('fieldset');
@@ -139,6 +142,8 @@ async function savePlayerChanges(event, editForm, playerId) {
         character_name: formData.get('character_name'),
         class: formData.get('class'),
         level: Number(formData.get('level')),
+        max_hp: Number(formData.get('max_hp')),
+        ac: Number(formData.get('ac')),
         attributes: Object.fromEntries(
             attributeNames.map(attribute => [attribute, Number(formData.get(attribute))])
         )
@@ -182,6 +187,8 @@ playerForm.addEventListener('submit', async event => {
         character_name: formData.get('character-name'),
         class: formData.get('player-class'),
         level: Number(formData.get('player-level')),
+        max_hp: Number(formData.get('player-max-hp')),
+        ac: Number(formData.get('player-ac')),
         attributes: {
             strength: Number(formData.get('player-strength')),
             dexterity: Number(formData.get('player-dexterity')),
