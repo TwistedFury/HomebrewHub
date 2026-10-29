@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../styles.css">
+        <title>Homebrew Hub - Cyberpunk Combat Tracker</title>
+    </head>
+    <body>
+        <main class="page-shell initiative-page cyberpunk-page">
+            <section class="page-card">
+                <a class="back-btn" href="../homePage.html">Home</a>
+
+                <h1>Cyberpunk Combat Tracker</h1>
+                <p class="intro">
+                    Add combatants to the encounter and they'll be sorted by initiative.
+                    Damage goes through SP first, and anything that gets through ablates the armor it hit.
+                </p>
+
+                <form id="creatureForm" class="initiative-form">
+                    <div class="initiative-field initiative-field-name">
+                        <label for="creatureName">Name</label>
+                        <input type="text" id="creatureName" required>
+                    </div>
+                    <div class="initiative-field">
+                        <label for="creatureInitiative">Initiative</label>
+                        <input type="number" id="creatureInitiative" step="any" required>
+                    </div>
+                    <div class="initiative-field">
+                        <label for="creatureHp" id="creatureHpLabel">HP</label>
+                        <input type="number" id="creatureHp" min="0" required>
+                        <label class="initiative-check" for="creatureIsPlayer">
+                            <input type="checkbox" id="creatureIsPlayer">
+                            Player Character
+                        </label>
+                    </div>
+                    <div class="initiative-field" id="spHeadField">
+                        <label for="creatureSpHead">SP (Head)</label>
+                        <input type="number" id="creatureSpHead" min="0">
+                    </div>
+                    <div class="initiative-field">
+                        <label for="creatureSpBody" id="creatureSpBodyLabel">SP (Body)</label>
+                        <input type="number" id="creatureSpBody" min="0">
+                        <label class="initiative-check" for="creatureIsVehicle">
+                            <input type="checkbox" id="creatureIsVehicle">
+                            Vehicle
+                        </label>
+                    </div>
+                    <div class="initiative-field">
+                        <label for="creatureAmount">Amount</label>
+                        <input type="number" id="creatureAmount" min="1" value="1" required>
+                        <label class="initiative-check" for="creatureIsBoss">
+                            <input type="checkbox" id="creatureIsBoss">
+                            Boss
+                        </label>
+                    </div>
+                    <div id="quickInfoFields" class="boss-fields quick-info-fields">
+                        <div class="initiative-field">
+                            <label for="creatureEvasion">Evasion Base</label>
+                            <input type="number" id="creatureEvasion" min="0" placeholder="Optional">
+                        </div>
+                        <div class="initiative-field">
+                            <label for="creatureCombat">Combat Base</label>
+                            <input type="number" id="creatureCombat" min="0" placeholder="Optional">
+                        </div>
+                        <div class="initiative-field">
+                            <label for="creatureMove">MOVE</label>
+                            <input type="number" id="creatureMove" min="0" placeholder="Optional">
+                        </div>
+                        <label class="initiative-check quick-info-dodge" for="creatureCanDodge">
+                            <input type="checkbox" id="creatureCanDodge">
+                            Can dodge bullets
+                        </label>
+                    </div>
+                    <div class="initiative-actions">
+                        <button type="submit" class="initiative-btn">Add</button>
+                        <button type="button" id="clearButton" class="initiative-btn initiative-btn-secondary">Clear All</button>
+                    </div>
+                </form>
+
+                <div class="combat-bar">
+                    <span id="roundDisplay" class="round-display">Not in combat</span>
+                    <label class="initiative-check combat-option" for="groupPlayers">
+                        <input type="checkbox" id="groupPlayers" checked>
+                        Player Groups (combine players who go back to back)
+                    </label>
+                    <button type="button" id="combatButton" class="initiative-btn">Start Combat</button>
+                </div>
+
+                <div id="initiativeList" class="initiative-list"></div>
+            </section>
+        </main>
+
+        <script src="../Javascript/cyberpunkInitiative.js"></script>
+    </body>
+</html>
