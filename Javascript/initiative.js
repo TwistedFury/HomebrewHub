@@ -9,6 +9,8 @@
 // Regular enemies also get identifiers: one optional note per individual ("red cloak", "on the left")
 // Monsters keep selected: one flag per individual, marking who the next "Apply Damage" hits
 // Bosses also carry legendaryActions and legendaryResistances: { max, current }
+// Players imported from a campaign also carry playerId, className and level, and start with
+// initiative null until it's typed in (combat can't start while anyone is still waiting on one)
 // Lairs are their own kind of entry: always named "Lair" on initiative 20, no HP/AC, and they carry
 // lairActions: [{ identifier, usedRound }]. A used action comes back two rounds later (used on 1 -> back on 3)
 let creatures = [];
@@ -44,6 +46,17 @@ const initiativeInput = document.getElementById("creatureInitiative");
 const lairCheckbox = document.getElementById("creatureIsLair");
 const lairFields = document.getElementById("lairFields");
 const lairActionsInput = document.getElementById("creatureLairActions");
+
+const campaignSelect = document.getElementById("campaignSelect");
+const importPartyButton = document.getElementById("importPartyButton");
+const partyImportStatus = document.getElementById("partyImportStatus");
+
+// Same API as the Campaigns page: Live Server (port 5500) talks to server.py on 8000
+const apiBase = window.location.port === "5500"
+    ? "http://localhost:8000/api"
+    : "../api";
+
+let campaigns = [];
 
 const LAIR_NAME = "Lair";
 const LAIR_INITIATIVE = 20;
@@ -285,10 +298,11 @@ combatButton.addEventListener("click", function ()
 
 function sortCreatures()
 {
-    // Highest initiative goes first. On ties the players' side (players and the creatures they
-    // control) goes first, and lairs go last
+    // Highest initiative goes first, and anyone still waiting on initiative sits at the bottom.
+    // On ties the players' side (players and the creatures they control) goes first, and lairs go last
+    const initiativeOf = c => c.initiative === null ? -Infinity : c.initiative;
     const tiePriority = c => c.isPlayer || c.isPlayerControlled ? 1 : (c.isLair ? -1 : 0);
-    creatures.sort((a, b) => b.initiative - a.initiative || tiePriority(b) - tiePriority(a));
+    creatures.sort((a, b) => (initiativeOf(b) - initiativeOf(a)) || tiePriority(b) - tiePriority(a));
 }
 
 // Splits the initiative order into turns. Normally each creature is its own turn, but in
@@ -320,9 +334,14 @@ function findTurnIndex(turns, id)
     return turns.findIndex(turn => turn.some(c => c.id === id));
 }
 
+function countMissingInitiative()
+{
+    return creatures.filter(c => c.initiative === null).length;
+}
+
 function startCombat()
 {
-    if (creatures.length === 0)
+    if (creatures.length === 0 || countMissingInitiative() > 0)
     {
         return;
     }
@@ -420,9 +439,22 @@ function renderCombatBar()
 
     combatButton.textContent = inCombat ? "End Combat" : "Start Combat";
     combatButton.classList.toggle("initiative-btn-secondary", inCombat);
-    combatButton.disabled = !inCombat && creatures.length === 0;
+    const missing = countMissingInitiative();
+    combatButton.disabled = !inCombat && (creatures.length === 0 || missing > 0);
 
-    roundDisplay.textContent = inCombat ? `Round ${round}` : "Not in combat";
+    if (inCombat)
+    {
+        roundDisplay.textContent = `Round ${round}`;
+    }
+    else if (missing > 0)
+    {
+        roundDisplay.textContent = `Waiting on initiative for ${missing}`;
+    }
+    else
+    {
+        roundDisplay.textContent = "Not in combat";
+    }
+
     roundDisplay.classList.toggle("active", inCombat);
 }
 
@@ -433,7 +465,15 @@ function createInitiativeInput(creature, className)
     input.type = "number";
     input.step = "any";
     input.className = `${className} initiative-input`;
-    input.value = creature.initiative;
+    input.value = creature.initiative === null ? "" : creature.initiative;
+    input.placeholder = "?";
+    input.classList.toggle("needs-initiative", creature.initiative === null);
+
+    if (creature.dexModifier !== undefined && creature.dexModifier !== null)
+    {
+        const sign = creature.dexModifier >= 0 ? "+" : "";
+        input.title = `Edit initiative (DEX ${sign}${creature.dexModifier})`;
+    }
     input.title = "Edit initiative";
     input.setAttribute("aria-label", `Initiative for ${creature.name}`);
 
@@ -766,10 +806,12 @@ function renderCreatureCard(creature, isCurrent)
         name.appendChild(tag);
     }
 
-    // Stat block style line, e.g. "Medium humanoid"
+    // Stat block style line, e.g. "Medium humanoid"; imported players show their class instead
     const details = document.createElement("span");
     details.className = "creature-meta";
-    details.textContent = `${creature.size} ${creature.isCustomType ? creature.type : creature.type.toLowerCase()}`;
+    details.textContent = creature.className
+        ? `${creature.className}, level ${creature.level}`
+        : `${creature.size} ${creature.isCustomType ? creature.type : creature.type.toLowerCase()}`;
 
     if (creature.isVehicle)
     {
@@ -1064,6 +1106,163 @@ function render()
     }
 }
 
+// ── Party import ──────────────────────────────────────────────
+
+async function fetchJson(path)
+{
+    const response = await fetch(`${apiBase}/${path}`);
+
+    if (!response.ok)
+    {
+        throw new Error(`Request for ${path} failed (${response.status}).`);
+    }
+
+    return response.json();
+}
+
+async function loadCampaigns()
+{
+    try
+    {
+        campaigns = await fetchJson("campaigns");
+    }
+    catch (error)
+    {
+        console.error(error);
+        campaignSelect.replaceChildren(new Option("Campaigns unavailable", ""));
+        partyImportStatus.textContent = "Couldn't load campaigns. Make sure server.py is running.";
+        return;
+    }
+
+    campaignSelect.replaceChildren(new Option("Select a campaign...", ""));
+
+    for (const campaign of campaigns)
+    {
+        const count = Array.isArray(campaign.players) ? campaign.players.length : 0;
+        const label = `${campaign.name || "Unnamed campaign"} (${count} player${count === 1 ? "" : "s"})`;
+        campaignSelect.appendChild(new Option(label, campaign.campaign_id));
+    }
+
+    campaignSelect.disabled = campaigns.length === 0;
+
+    if (campaigns.length === 0)
+    {
+        partyImportStatus.textContent = "No campaigns to import from yet.";
+    }
+}
+
+// The DEX modifier is the usual initiative bonus, so it's shown as a hint on the empty box
+function dexModifier(player)
+{
+    const dexterity = player.attributes && Number(player.attributes.dexterity);
+    return isNaN(dexterity) ? null : Math.floor((dexterity - 10) / 2);
+}
+
+function toNumberOrNull(value)
+{
+    const number = parseInt(value);
+    return isNaN(number) ? null : Math.max(0, number);
+}
+
+// Adds every player in the campaign as a Player Character with their HP and AC filled in.
+// Anyone already in the tracker (matched by player id) is skipped so importing twice is safe.
+async function importParty()
+{
+    const campaign = campaigns.find(c => c.campaign_id === campaignSelect.value);
+
+    if (!campaign)
+    {
+        return;
+    }
+
+    importPartyButton.disabled = true;
+    partyImportStatus.textContent = "Importing party...";
+
+    try
+    {
+        const players = await fetchJson("players");
+        const playerIds = Array.isArray(campaign.players) ? campaign.players : [];
+        let added = 0;
+        let skipped = 0;
+        const missing = [];
+
+        for (const playerId of playerIds)
+        {
+            if (creatures.some(c => c.playerId === playerId))
+            {
+                skipped++;
+                continue;
+            }
+
+            const player = players.find(p => p.player_id === playerId);
+
+            if (!player)
+            {
+                missing.push(playerId);
+                continue;
+            }
+
+            creatures.push({
+                id: nextId++,
+                playerId: playerId,
+                name: player.character_name || player.name,
+                initiative: null,
+                dexModifier: dexModifier(player),
+                isPlayer: true,
+                isBoss: false,
+                isVehicle: false,
+                isPlayerControlled: false,
+                type: "Humanoid",
+                isCustomType: false,
+                size: "Medium",
+                className: player.class,
+                level: player.level,
+                hp: [toNumberOrNull(player.max_hp)],
+                ac: [toNumberOrNull(player.ac)]
+            });
+            added++;
+        }
+
+        const parts = [`Added ${added} player${added === 1 ? "" : "s"} from ${campaign.name}.`];
+
+        if (skipped > 0)
+        {
+            parts.push(`${skipped} already in the tracker.`);
+        }
+
+        if (missing.length > 0)
+        {
+            parts.push(`Couldn't find: ${missing.join(", ")}.`);
+        }
+
+        if (added > 0)
+        {
+            parts.push("Type in their initiatives to start combat.");
+        }
+
+        partyImportStatus.textContent = parts.join(" ");
+        render();
+    }
+    catch (error)
+    {
+        console.error(error);
+        partyImportStatus.textContent = "Couldn't load the players. Make sure server.py is running.";
+    }
+    finally
+    {
+        importPartyButton.disabled = !campaignSelect.value;
+    }
+}
+
+campaignSelect.addEventListener("change", () =>
+{
+    importPartyButton.disabled = !campaignSelect.value;
+    partyImportStatus.textContent = "";
+});
+
+importPartyButton.addEventListener("click", importParty);
+
 updateTypeFields();
 updateCustomType();
 render();
+loadCampaigns();
