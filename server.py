@@ -4,7 +4,7 @@ import tempfile
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from uuid import uuid4
-from urllib.parse import urlparse
+from urllib.parse import unquote, urlparse
 
 
 ROOT = Path(__file__).resolve().parent
@@ -67,6 +67,22 @@ class HomebrewHubHandler(SimpleHTTPRequestHandler):
         if path == "/api/campaigns":
             try:
                 self.send_json(200, read_campaigns())
+            except (OSError, ValueError, json.JSONDecodeError) as error:
+                self.send_json(500, {"error": str(error)})
+            return
+        players_prefix = "/api/players/"
+        if path.startswith(players_prefix) and path[len(players_prefix):]:
+            player_id = unquote(path[len(players_prefix):])
+            try:
+                player = next(
+                    (item for item in read_players()
+                     if item.get("player_id") == player_id),
+                    None,
+                )
+                if player is None:
+                    self.send_json(404, {"error": "Player not found."})
+                else:
+                    self.send_json(200, player)
             except (OSError, ValueError, json.JSONDecodeError) as error:
                 self.send_json(500, {"error": str(error)})
             return
@@ -226,12 +242,18 @@ class HomebrewHubHandler(SimpleHTTPRequestHandler):
         character_name = str(player.get("character_name", "")).strip()
         player_class = str(player.get("class", "")).strip()
         level = player.get("level")
+        max_hp = player.get("max_hp")
+        armor_class = player.get("ac")
         attributes = player.get("attributes")
 
         if not name or not character_name or not player_class:
             raise ValueError("Player name, character name, and class are required.")
         if not isinstance(level, int) or not 1 <= level <= 20:
             raise ValueError("Player level must be an integer from 1 to 20.")
+        if not isinstance(max_hp, int) or max_hp < 1:
+            raise ValueError("Max HP must be a positive integer.")
+        if not isinstance(armor_class, int) or armor_class < 1:
+            raise ValueError("Armor Class must be a positive integer.")
         if not isinstance(attributes, dict):
             raise ValueError("Player attributes must be a JSON object.")
 
@@ -259,6 +281,8 @@ class HomebrewHubHandler(SimpleHTTPRequestHandler):
             "character_name": character_name,
             "class": player_class,
             "level": level,
+            "max_hp": max_hp,
+            "ac": armor_class,
             "attributes": {name: attributes[name] for name in attribute_names},
         }
 
