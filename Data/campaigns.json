@@ -17,9 +17,9 @@
         "description": "test description",
         "campaign_id": "campaign-c83c9518",
         "players": [
-            "sample0-player-id",
             "player-a4ba68d0",
-            "sample1-player-id"
+            "sample1-player-id",
+            "sample0-player-id"
         ]
     },
     {

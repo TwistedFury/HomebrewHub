@@ -67,7 +67,18 @@
                         <input type="number" id="player-charisma" name="player-charisma" min="1" max="30" value="10" required>
                     </div>
                 </fieldset>
-                <button type="submit">Save Player</button>
+                <div class="player-form-action">
+                    <button type="submit">Save Player</button>
+                </div>
+                <div class="player-form-action player-clone-action">
+                    <label for="prepopulate-clone-select">Clone Player:</label>
+                    <div class="player-clone-controls">
+                        <select id="prepopulate-clone-select" name="prepopulate-clone">
+                            <option value="">Select a player to clone</option>
+                        </select>
+                        <button type="button" id="prepopulate-clone">Clone</button>
+                    </div>
+                </div>
                 <p id="player-form-status" class="player-save-status" aria-live="polite"></p>
             </form>
 
