@@ -122,6 +122,8 @@ Player records use this shape:
   "character_name": "Elara Brightwood",
   "class": "Wizard",
   "level": 1,
+  "max_hp": 10,
+  "ac": 10,
   "attributes": {
     "strength": 10,
     "dexterity": 10,
@@ -135,6 +137,16 @@ Player records use this shape:
 
 Create saved players at `Pages/Players.html` while running `server.py`.
 The generated player IDs can then be selected when managing campaign players.
+
+Other pages can retrieve one player by ID with:
+
+```text
+GET /api/players/{player_id}
+```
+
+For example, `GET /api/players/sample0-player-id` returns the complete player
+record, including attributes, max HP, and armor class. A missing player returns
+`404` with a JSON error.
 
 ---
 
