@@ -46,11 +46,18 @@ function formatRange(range) {
 function formatDuration(duration) {
   const value = duration?.[0];
   if (!value) return "";
-  if (value.type === "instant") return "Instantaneous";
-  if (value.type === "permanent") return "Permanent";
 
   const length = value.duration;
-  return length ? `${length.amount} ${length.type}` : value.type;
+  const durationText = value.type === "instant"
+    ? "Instantaneous"
+    : value.type === "permanent"
+      ? "Permanent"
+      : length
+        ? `${length.amount} ${length.type}`
+        : value.type;
+  return value.concentration
+    ? `${durationText} (Concentration)`
+    : durationText;
 }
 
 function levelLabel(level) {
