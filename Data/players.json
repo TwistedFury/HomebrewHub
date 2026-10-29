@@ -12,7 +12,9 @@
             "intelligence": 10,
             "wisdom": 10,
             "charisma": 10
-        }
+        },
+        "max_hp": 10,
+        "ac": 10
     },
     {
         "name": "Jordan Lee",
@@ -27,7 +29,9 @@
             "wisdom": 10,
             "charisma": 10
         },
-        "player_id": "sample1-player-id"
+        "player_id": "sample1-player-id",
+        "max_hp": 10,
+        "ac": 10
     },
     {
         "name": "Cody Owens",
@@ -42,7 +46,9 @@
             "intelligence": 14,
             "wisdom": 14,
             "charisma": 20
-        }
+        },
+        "max_hp": 10,
+        "ac": 10
     },
     {
         "name": "Cody Owens",
@@ -57,6 +63,8 @@
             "intelligence": 20,
             "wisdom": 13,
             "charisma": 14
-        }
+        },
+        "max_hp": 10,
+        "ac": 10
     }
 ]
