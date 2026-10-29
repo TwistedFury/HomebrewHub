@@ -749,6 +749,75 @@ tbody tr:hover {
   font-size: 0.85rem;
 }
 
+.player-edit-button,
+.player-cancel-button,
+.player-edit-actions button[type="submit"] {
+  margin-top: 0.9rem;
+  padding: 0.5rem 0.8rem;
+  border: 1px solid var(--accent);
+  border-radius: 5px;
+  background: var(--accent);
+  color: var(--bg-paper);
+  font: inherit;
+  cursor: pointer;
+}
+
+.player-edit-button:hover,
+.player-cancel-button:hover {
+  background: var(--accent-hi);
+}
+
+.player-edit-form {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.player-edit-form input {
+  width: 100%;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid var(--line);
+  background: var(--bg-paper);
+  color: var(--ink);
+  font: inherit;
+}
+
+.player-edit-form label {
+  display: block;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  margin-bottom: 0.25rem;
+  font-weight: bold;
+}
+
+.player-edit-form .player-attributes {
+  margin-top: 0.25rem;
+  grid-template-columns: 1fr;
+}
+
+.player-edit-form .player-attributes label {
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.player-edit-actions {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.player-edit-actions button {
+  margin-top: 0;
+}
+
+.player-edit-error {
+  margin: 0;
+  color: var(--accent);
+}
+
+.player-cancel-button {
+  background: transparent;
+  color: var(--accent);
+}
+
 .no-player-results {
   color: var(--muted);
 }
@@ -776,6 +845,20 @@ tbody tr:hover {
   background: var(--bg);
   color: var(--ink);
   font: inherit;
+}
+
+.player-attributes {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  border: 1px solid var(--line);
+  padding: 1rem;
+}
+
+.player-attributes legend {
+  padding: 0 0.4rem;
+  font-weight: bold;
 }
 
 .player-form button {
@@ -1912,6 +1995,10 @@ tbody tr:hover {
   }
 
   .player-form {
+    grid-template-columns: 1fr;
+  }
+
+  .player-attributes {
     grid-template-columns: 1fr;
   }
 
