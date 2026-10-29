@@ -80,7 +80,7 @@ class HomebrewHubHandler(SimpleHTTPRequestHandler):
 
     def do_OPTIONS(self):
         path = urlparse(self.path).path
-        if path.startswith("/api/campaigns") or path == "/api/players":
+        if path.startswith("/api/campaigns") or path.startswith("/api/players"):
             self.send_response(204)
             self.send_cors_headers()
             self.end_headers()
@@ -116,6 +116,31 @@ class HomebrewHubHandler(SimpleHTTPRequestHandler):
 
     def do_PATCH(self):
         path = urlparse(self.path).path
+        players_prefix = "/api/players/"
+        if path.startswith(players_prefix) and path[len(players_prefix):]:
+            player_id = path[len(players_prefix):]
+            try:
+                content_length = int(self.headers.get("Content-Length", "0"))
+                payload = json.loads(self.rfile.read(content_length))
+                player = self.validate_player(payload)
+                players = read_players()
+                existing_player = next(
+                    (item for item in players if item.get("player_id") == player_id),
+                    None,
+                )
+                if existing_player is None:
+                    self.send_json(404, {"error": "Player not found."})
+                    return
+
+                player["player_id"] = player_id
+                player_index = players.index(existing_player)
+                players[player_index] = player
+                write_players(players)
+                self.send_json(200, player)
+            except (ValueError, TypeError, OSError, json.JSONDecodeError) as error:
+                self.send_json(400, {"error": str(error)})
+            return
+
         prefix = "/api/campaigns/"
         if not path.startswith(prefix) or not path[len(prefix):]:
             self.send_error(404)
@@ -201,17 +226,40 @@ class HomebrewHubHandler(SimpleHTTPRequestHandler):
         character_name = str(player.get("character_name", "")).strip()
         player_class = str(player.get("class", "")).strip()
         level = player.get("level")
+        attributes = player.get("attributes")
 
         if not name or not character_name or not player_class:
             raise ValueError("Player name, character name, and class are required.")
         if not isinstance(level, int) or not 1 <= level <= 20:
             raise ValueError("Player level must be an integer from 1 to 20.")
+        if not isinstance(attributes, dict):
+            raise ValueError("Player attributes must be a JSON object.")
+
+        attribute_names = (
+            "strength",
+            "dexterity",
+            "constitution",
+            "intelligence",
+            "wisdom",
+            "charisma",
+        )
+        if set(attributes) != set(attribute_names):
+            raise ValueError(
+                "Player attributes must include strength, dexterity, constitution, "
+                "intelligence, wisdom, and charisma."
+            )
+        if any(
+            not isinstance(attributes[name], int) or not 1 <= attributes[name] <= 30
+            for name in attribute_names
+        ):
+            raise ValueError("Player attributes must be integers from 1 to 30.")
 
         return {
             "name": name,
             "character_name": character_name,
             "class": player_class,
             "level": level,
+            "attributes": {name: attributes[name] for name in attribute_names},
         }
 
     @staticmethod
