@@ -26,6 +26,18 @@
                     Groups get one HP box per creature, so you can track each creature separately.
                 </p>
 
+                <section class="party-import" aria-labelledby="partyImportHeading">
+                    <h2 id="partyImportHeading" class="party-import-heading">Import a Party</h2>
+                    <div class="party-import-row">
+                        <label class="visually-hidden" for="campaignSelect">Campaign</label>
+                        <select id="campaignSelect" disabled>
+                            <option value="">Loading campaigns...</option>
+                        </select>
+                        <button type="button" id="importPartyButton" class="initiative-btn" disabled>Import Party</button>
+                    </div>
+                    <p id="partyImportStatus" class="party-import-status" aria-live="polite"></p>
+                </section>
+
                 <form id="creatureForm" class="initiative-form">
                     <div class="initiative-field initiative-field-name">
                         <label for="creatureName">Name</label>
