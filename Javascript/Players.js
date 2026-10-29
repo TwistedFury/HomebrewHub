@@ -6,6 +6,10 @@ const formStatus = document.getElementById('player-form-status');
 const savedPlayers = document.getElementById('saved-players');
 const attributeNames = ['strength', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'charisma'];
 
+const prepopulateCloneButton = document.getElementById('prepopulate-clone');
+prepopulateCloneButton.addEventListener('click', () => prepopulateClone());
+const prepopulateCloneSelect = document.getElementById('prepopulate-clone-select');
+
 async function getPlayers() {
     const response = await fetch(`${apiBase}/players`);
     if (!response.ok) {
@@ -172,6 +176,7 @@ async function savePlayerChanges(event, editForm, playerId) {
 async function loadPlayers() {
     try {
         currentPlayers = await getPlayers();
+        updatePrepopulateCloneOptions();
         renderPlayers(currentPlayers);
     } catch (error) {
         console.error(error);
@@ -219,5 +224,34 @@ playerForm.addEventListener('submit', async event => {
         formStatus.textContent = 'The player could not be saved.';
     }
 });
+
+function prepopulateClone() {
+    const selectedPlayerId = prepopulateCloneSelect.value;
+    const playerToClone = currentPlayers.find(player => player.player_id === selectedPlayerId);
+    if (playerToClone) {
+        playerForm.querySelector('#player-name').value = playerToClone.name;
+        playerForm.querySelector('#character-name').value = playerToClone.character_name;
+        playerForm.querySelector('#player-class').value = playerToClone.class;
+        playerForm.querySelector('#player-level').value = playerToClone.level;
+        playerForm.querySelector('#player-max-hp').value = playerToClone.max_hp;
+        playerForm.querySelector('#player-ac').value = playerToClone.ac;
+        playerForm.querySelector('#player-strength').value = playerToClone.attributes.strength;
+        playerForm.querySelector('#player-dexterity').value = playerToClone.attributes.dexterity;
+        playerForm.querySelector('#player-constitution').value = playerToClone.attributes.constitution;
+        playerForm.querySelector('#player-intelligence').value = playerToClone.attributes.intelligence;
+        playerForm.querySelector('#player-wisdom').value = playerToClone.attributes.wisdom;
+        playerForm.querySelector('#player-charisma').value = playerToClone.attributes.charisma;
+    }
+}
+
+function updatePrepopulateCloneOptions() {
+    prepopulateCloneSelect.innerHTML = '<option value="">Select a player to clone</option>';
+    currentPlayers.forEach(player => {
+        const option = document.createElement('option');
+        option.value = player.player_id;
+        option.textContent = `${player.name} (${player.character_name})`;
+        prepopulateCloneSelect.appendChild(option);
+    });
+}
 
 loadPlayers();

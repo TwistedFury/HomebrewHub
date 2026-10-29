@@ -851,6 +851,23 @@ tbody tr:hover {
   font: inherit;
 }
 
+.player-form select {
+  width: 100%;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--bg);
+  color: var(--ink);
+  font: inherit;
+}
+
+.player-form select:focus,
+.player-form input:focus {
+  border-color: var(--accent);
+  outline: 2px solid color-mix(in srgb, var(--accent) 25%, transparent);
+  outline-offset: 1px;
+}
+
 .player-attributes {
   display: grid;
   grid-column: 1 / -1;
@@ -879,6 +896,47 @@ tbody tr:hover {
 
 .player-form button:hover {
   background: var(--accent-hi);
+}
+
+.player-form-action {
+  display: flex;
+  align-items: end;
+}
+
+.player-clone-action {
+  display: block;
+}
+
+.player-clone-action > label {
+  margin-bottom: 0.4rem;
+}
+
+.player-clone-controls {
+  display: flex;
+  align-items: stretch;
+  gap: 0.6rem;
+}
+
+.player-clone-controls select {
+  flex: 1;
+  min-width: 0;
+}
+
+.player-clone-controls button {
+  flex-shrink: 0;
+}
+
+#prepopulate-clone {
+  background: transparent;
+  color: var(--accent);
+}
+
+#prepopulate-clone:hover {
+  background: var(--bg-paper);
+}
+
+#prepopulate-clone-select {
+  cursor: pointer;
 }
 
 .player-form .player-save-status {
