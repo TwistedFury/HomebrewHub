@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../styles.css">
+        <title>Homebrew Hub - Combat Tracker</title>
+    </head>
+    <body>
+        <main class="page-shell initiative-page">
+            <section class="page-card">
+                <a class="back-btn" href="../homePage.html">Home</a>
+
+                <h1>Combat Tracker</h1>
+                <p class="intro">
+                    Add creatures to the encounter and they'll be sorted by initiative.
+                    Groups get one HP box per creature, so you can track each creature separately.
+                </p>
+
+                <form id="creatureForm" class="initiative-form">
+                    <div class="initiative-field initiative-field-name">
+                        <label for="creatureName">Name</label>
+                        <input type="text" id="creatureName" required>
+                        <div class="creature-details">
+                            <div class="creature-detail">
+                                <label for="creatureType">Type</label>
+                                <select id="creatureType">
+                                    <option value="Aberration">Aberration</option>
+                                    <option value="Beast">Beast</option>
+                                    <option value="Celestial">Celestial</option>
+                                    <option value="Construct">Construct</option>
+                                    <option value="Dragon">Dragon</option>
+                                    <option value="Elemental">Elemental</option>
+                                    <option value="Fey">Fey</option>
+                                    <option value="Fiend">Fiend</option>
+                                    <option value="Giant">Giant</option>
+                                    <option value="Humanoid" selected>Humanoid</option>
+                                    <option value="Monstrosity">Monstrosity</option>
+                                    <option value="Ooze">Ooze</option>
+                                    <option value="Plant">Plant</option>
+                                    <option value="Undead">Undead</option>
+                                    <option value="custom">Custom...</option>
+                                </select>
+                                <input type="text" id="creatureCustomType" placeholder="e.g. Fiend (Demon)" hidden>
+                            </div>
+                            <div class="creature-detail">
+                                <label for="creatureSize">Size</label>
+                                <select id="creatureSize">
+                                    <option value="Tiny">Tiny (0.5 by 0.5)</option>
+                                    <option value="Small">Small (1 by 1)</option>
+                                    <option value="Medium" selected>Medium (1 by 1)</option>
+                                    <option value="Large">Large (2 by 2)</option>
+                                    <option value="Huge">Huge (3 by 3)</option>
+                                    <option value="Gargantuan">Gargantuan (4 by 4)</option>
+                                    <option value="Leviathan">Leviathan (5 by 5)</option>
+                                    <option value="Colossal">Colossal (6 by 6)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="initiative-field">
+                        <label for="creatureInitiative">Initiative</label>
+                        <input type="number" id="creatureInitiative" step="any" required>
+                    </div>
+                    <div class="initiative-field">
+                        <label for="creatureHp">HP</label>
+                        <input type="number" id="creatureHp" min="0" required>
+                        <label class="initiative-check" for="creatureIsPlayer">
+                            <input type="checkbox" id="creatureIsPlayer">
+                            Player Character
+                        </label>
+                        <label class="initiative-check" for="creatureIsPlayerControlled">
+                            <input type="checkbox" id="creatureIsPlayerControlled">
+                            Player Controlled
+                        </label>
+                    </div>
+                    <div class="initiative-field">
+                        <label for="creatureAc">AC</label>
+                        <input type="number" id="creatureAc" min="0">
+                        <label class="initiative-check" for="creatureIsVehicle">
+                            <input type="checkbox" id="creatureIsVehicle">
+                            Vehicle
+                        </label>
+                    </div>
+                    <div class="initiative-field">
+                        <label for="creatureAmount">Amount</label>
+                        <input type="number" id="creatureAmount" min="1" value="1" required>
+                        <label class="initiative-check" for="creatureIsBoss">
+                            <input type="checkbox" id="creatureIsBoss">
+                            Boss Monster
+                        </label>
+                        <label class="initiative-check" for="creatureIsLair">
+                            <input type="checkbox" id="creatureIsLair">
+                            Lair
+                        </label>
+                    </div>
+                    <div id="bossFields" class="boss-fields" hidden>
+                        <div class="initiative-field">
+                            <label for="creatureLegendaryActions">Legendary Actions</label>
+                            <input type="number" id="creatureLegendaryActions" min="0" value="3">
+                        </div>
+                        <div class="initiative-field">
+                            <label for="creatureLegendaryResistances">Legendary Resistances</label>
+                            <input type="number" id="creatureLegendaryResistances" min="0" value="3">
+                        </div>
+                    </div>
+                    <div id="lairFields" class="boss-fields" hidden>
+                        <div class="initiative-field">
+                            <label for="creatureLairActions">Lair Actions</label>
+                            <input type="number" id="creatureLairActions" min="1" value="3">
+                        </div>
+                    </div>
+                    <div id="vehicleFields" class="boss-fields" hidden>
+                        <div class="initiative-field">
+                            <label for="creatureDamageThreshold">Damage Threshold</label>
+                            <input type="number" id="creatureDamageThreshold" min="0" placeholder="0">
+                        </div>
+                    </div>
+                    <div class="initiative-actions">
+                        <button type="submit" class="initiative-btn">Add</button>
+                        <button type="button" id="clearButton" class="initiative-btn initiative-btn-secondary">Clear All</button>
+                    </div>
+                </form>
+
+                <div class="combat-bar">
+                    <span id="roundDisplay" class="round-display">Not in combat</span>
+                    <label class="initiative-check combat-option" for="groupPlayers">
+                        <input type="checkbox" id="groupPlayers" checked>
+                        Player Groups (combine players who go back to back)
+                    </label>
+                    <button type="button" id="combatButton" class="initiative-btn">Start Combat</button>
+                </div>
+
+                <div id="initiativeList" class="initiative-list"></div>
+            </section>
+        </main>
+
+        <script src="../Javascript/initiative.js"></script>
+    </body>
+</html>
