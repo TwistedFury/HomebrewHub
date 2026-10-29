@@ -1,0 +1,62 @@
+[
+    {
+        "player_id": "sample0-player-id",
+        "name": "Alex Morgan",
+        "character_name": "Elara Brightwood",
+        "class": "Wizard",
+        "level": 1,
+        "attributes": {
+            "strength": 10,
+            "dexterity": 10,
+            "constitution": 10,
+            "intelligence": 10,
+            "wisdom": 10,
+            "charisma": 10
+        }
+    },
+    {
+        "name": "Jordan Lee",
+        "character_name": "Bram Ironhand",
+        "class": "Fighter",
+        "level": 9,
+        "attributes": {
+            "strength": 12,
+            "dexterity": 12,
+            "constitution": 15,
+            "intelligence": 10,
+            "wisdom": 10,
+            "charisma": 10
+        },
+        "player_id": "sample1-player-id"
+    },
+    {
+        "name": "Cody Owens",
+        "character_name": "Bongo Bongo",
+        "class": "Bard: College of Stories",
+        "level": 10,
+        "player_id": "player-58147d0c",
+        "attributes": {
+            "strength": 12,
+            "dexterity": 20,
+            "constitution": 14,
+            "intelligence": 14,
+            "wisdom": 14,
+            "charisma": 20
+        }
+    },
+    {
+        "name": "Cody Owens",
+        "character_name": "Thundrek Stormcaller",
+        "class": "Wizard",
+        "level": 11,
+        "player_id": "player-a4ba68d0",
+        "attributes": {
+            "strength": 13,
+            "dexterity": 15,
+            "constitution": 20,
+            "intelligence": 20,
+            "wisdom": 13,
+            "charisma": 14
+        }
+    }
+]

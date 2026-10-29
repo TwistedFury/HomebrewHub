@@ -108,8 +108,33 @@ Pages/Campaigns.html?id=nickb-1
 ```
 
 Add more records to `Data/campaigns.json` with unique `campaign_id` values and
-use each value in the URL. Use `server.py` while developing so campaign form
+use each value in the URL. Each campaign can include a `players` array of IDs
+from `Data/players.json`; the campaign detail view resolves those IDs into
+searchable player cards. Use `server.py` while developing so campaign form
 submissions are written to the JSON file.
+
+Player records use this shape:
+
+```json
+{
+  "player_id": "sample0-player-id",
+  "name": "Alex Morgan",
+  "character_name": "Elara Brightwood",
+  "class": "Wizard",
+  "level": 1,
+  "attributes": {
+    "strength": 10,
+    "dexterity": 10,
+    "constitution": 10,
+    "intelligence": 10,
+    "wisdom": 10,
+    "charisma": 10
+  }
+}
+```
+
+Create saved players at `Pages/Players.html` while running `server.py`.
+The generated player IDs can then be selected when managing campaign players.
 
 ---
 
