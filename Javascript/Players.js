@@ -4,7 +4,20 @@ const apiBase = window.location.port === '5500'
 const playerForm = document.getElementById('player-form');
 const formStatus = document.getElementById('player-form-status');
 const savedPlayers = document.getElementById('saved-players');
+const editPlayerDialog = document.getElementById('edit-player-dialog');
 const attributeNames = ['strength', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'charisma'];
+
+editPlayerDialog.addEventListener('click', event => {
+    const dialogDimensions = editPlayerDialog.getBoundingClientRect();
+    const clickedOutside =
+        event.clientX < dialogDimensions.left ||
+        event.clientX > dialogDimensions.right ||
+        event.clientY < dialogDimensions.top ||
+        event.clientY > dialogDimensions.bottom;
+    if (clickedOutside) {
+        editPlayerDialog.close();
+    }
+});
 
 const prepopulateCloneButton = document.getElementById('prepopulate-clone');
 prepopulateCloneButton.addEventListener('click', () => prepopulateClone());
@@ -64,7 +77,7 @@ function renderPlayers(players) {
         editButton.type = 'button';
         editButton.className = 'player-edit-button';
         editButton.textContent = 'Edit player';
-        editButton.addEventListener('click', () => showEditForm(card, player));
+        editButton.addEventListener('click', () => showEditForm(player));
 
         card.append(name, character, details, editButton);
         savedPlayers.append(card);
@@ -90,7 +103,14 @@ function createPlayerInput(label, name, value, type = 'text') {
     return container;
 }
 
-function showEditForm(card, player) {
+function showEditForm(player) {
+    editPlayerDialog.replaceChildren();
+
+    const title = document.createElement('h2');
+    title.id = 'edit-player-title';
+    title.textContent = `Edit ${player.name}`;
+    editPlayerDialog.append(title);
+
     const editForm = document.createElement('form');
     editForm.className = 'player-edit-form';
     editForm.append(
@@ -128,11 +148,12 @@ function showEditForm(card, player) {
     cancelButton.type = 'button';
     cancelButton.className = 'player-cancel-button';
     cancelButton.textContent = 'Cancel';
-    cancelButton.addEventListener('click', () => renderPlayers(currentPlayers));
+    cancelButton.addEventListener('click', () => editPlayerDialog.close());
     actions.append(saveButton, cancelButton);
     editForm.append(actions);
 
-    card.replaceChildren(editForm);
+    editPlayerDialog.append(editForm);
+    editPlayerDialog.showModal();
     editForm.addEventListener('submit', event => savePlayerChanges(event, editForm, player.player_id));
 }
 
@@ -164,8 +185,10 @@ async function savePlayerChanges(event, editForm, playerId) {
             throw new Error(error.error || `Player update failed (${response.status}).`);
         }
         await loadPlayers();
+        editPlayerDialog.close();
     } catch (error) {
         console.error(error);
+        editForm.querySelector('.player-edit-error')?.remove();
         const errorMessage = document.createElement('p');
         errorMessage.className = 'player-edit-error';
         errorMessage.textContent = error.message || 'The player could not be saved.';

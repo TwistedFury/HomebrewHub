@@ -284,8 +284,18 @@ function renderCampaignList(campaigns) {
 }
 
 const campaignForm = document.querySelector('#campaign-form');
+const campaignCreateToggle = document.querySelector('#campaign-create-toggle');
 
-if (campaignForm) {
+if (campaignForm && campaignCreateToggle) {
+    campaignCreateToggle.addEventListener('click', () => {
+        const isHidden = campaignForm.hidden;
+        campaignForm.hidden = !isHidden;
+        campaignCreateToggle.setAttribute('aria-expanded', String(isHidden));
+        if (isHidden) {
+            campaignForm.querySelector('input, textarea')?.focus();
+        }
+    });
+
     campaignForm.addEventListener('submit', async event => {
         event.preventDefault();
 
@@ -315,6 +325,9 @@ if (campaignForm) {
             }
 
             campaignForm.reset();
+            campaignForm.hidden = true;
+            campaignCreateToggle.setAttribute('aria-expanded', 'false');
+            campaignCreateToggle.focus();
             showMessage('Campaign created successfully.');
         } catch (error) {
             console.error(error);
