@@ -253,6 +253,10 @@ function removeSpell(spell) {
   selectedSpells = selectedSpells.filter(
     selected => spellKey(selected) !== spellKey(spell)
   );
+  if (selectedSpells.length === 0) {
+    window.location.replace("Spells.html");
+    return;
+  }
   renderSelectedSpells();
 }
 
@@ -293,6 +297,11 @@ async function initializeSpellDisplay() {
       } else if (!spell) {
         missingNames.push(requestedName);
       }
+    }
+
+    if (selectedSpells.length === 0) {
+      window.location.replace("Spells.html");
+      return;
     }
 
     if (requestedNames.length > MAX_SELECTED_SPELLS) {

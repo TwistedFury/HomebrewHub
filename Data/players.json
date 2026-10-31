@@ -1,20 +1,20 @@
 [
     {
-        "player_id": "sample0-player-id",
         "name": "Alex Morgan",
         "character_name": "Elara Brightwood",
         "class": "Wizard",
         "level": 1,
+        "max_hp": 10,
+        "ac": 10,
         "attributes": {
-            "strength": 10,
+            "strength": 11,
             "dexterity": 10,
             "constitution": 10,
             "intelligence": 10,
             "wisdom": 10,
             "charisma": 10
         },
-        "max_hp": 10,
-        "ac": 10
+        "player_id": "sample0-player-id"
     },
     {
         "name": "Jordan Lee",
