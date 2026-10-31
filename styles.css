@@ -1421,6 +1421,139 @@ tbody tr:hover {
   gap: 0.75rem;
 }
 
+.coc-health-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.coc-method-row > label {
+  font-weight: bold;
+}
+
+.coc-method-row select,
+.coc-con-result select {
+  padding: 0.5rem 0.6rem;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--bg-paper);
+  color: var(--ink);
+  font: inherit;
+}
+
+.coc-combat-bar {
+  justify-content: flex-start;
+}
+
+.coc-combat-bar .round-display {
+  flex: 1 1 100%;
+}
+
+.coc-combatant .creature-header {
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+}
+
+.coc-combatant .creature-remove {
+  margin-left: auto;
+}
+
+.coc-roll-status,
+.coc-condition {
+  margin: 0.25rem 0;
+  color: var(--muted);
+}
+
+.coc-roll-status {
+  font-weight: bold;
+}
+
+.coc-condition {
+  padding: 0.45rem 0.6rem;
+  border-left: 3px solid var(--line);
+  background: var(--bg-sunken);
+  color: var(--ink);
+}
+
+.coc-combatant.coc-dead {
+  opacity: 0.7;
+}
+
+.coc-health-row {
+  margin: 0.65rem 0;
+}
+
+.coc-health-row .stat-field {
+  grid-template-columns: auto minmax(4rem, 6rem);
+}
+
+.coc-max-hp {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.coc-wound-toggle {
+  margin: 0;
+}
+
+.coc-damage-row {
+  padding-left: 0;
+}
+
+.coc-damage-row .damage-input {
+  width: min(100%, 14rem);
+}
+
+.coc-con-button {
+  margin-top: 0.5rem;
+}
+
+.coc-con-result {
+  margin: 0.65rem 0;
+}
+
+.coc-con-result > label {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.coc-con-result-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.coc-con-result-controls select {
+  min-width: min(100%, 14rem);
+}
+
+.coc-con-button {
+  margin-top: 0;
+}
+
+.coc-initiative-page .initiative-form {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.coc-initiative-page .initiative-field .initiative-check {
+  margin-top: 0.55rem;
+}
+
+.coc-initiative-page .initiative-actions {
+  align-items: center;
+}
+
+@media (max-width: 650px) {
+  .coc-initiative-page .initiative-form {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 .initiative-empty {
   margin: 0;
   padding: 1.5rem 1rem;

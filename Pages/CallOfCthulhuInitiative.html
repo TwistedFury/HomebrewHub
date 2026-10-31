@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Track Call of Cthulhu combat order, rounds, wounds, and hit points.">
+    <title>Call of Cthulhu Initiative Tracker | Homebrew Hub</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="icon" href="../Images/Shield.png" type="image/png">
+</head>
+<body>
+    <header class="hp-topbar">
+        <a class="hp-brand" href="../homePage.html" aria-label="Homebrew Hub home">Homebrew Hub</a>
+        <nav class="hp-topnav" aria-label="Main navigation">
+            <a href="Campaigns.html">Campaigns</a>
+            <a href="Players.html">Players</a>
+            <a href="InitiativeTrackers.html">Initiative Trackers</a>
+            <a href="Spells.html">Spells</a>
+        </nav>
+    </header>
+
+    <main class="page-shell initiative-page coc-initiative-page">
+        <section class="page-card">
+            <h1>Call of Cthulhu Initiative Tracker</h1>
+            <p class="intro">
+                Track combatants, turns, hit points, and conditions.
+            </p>
+
+            <form id="combatantForm" class="initiative-form">
+                <div class="initiative-field initiative-field-name">
+                    <label for="combatantName">Name</label>
+                    <input type="text" id="combatantName" required>
+                </div>
+                <div class="initiative-field">
+                    <label for="combatantDex">DEX / initiative</label>
+                    <input type="number" id="combatantDex" min="1" max="100" value="50" required>
+                </div>
+                <div class="initiative-field">
+                    <label for="combatantMaxHp">Max HP</label>
+                    <input type="number" id="combatantMaxHp" min="1" value="10" required>
+                </div>
+                <div class="initiative-field">
+                    <label for="combatantHp">Current HP</label>
+                    <input type="number" id="combatantHp" min="0" value="10" required>
+                </div>
+                <div class="initiative-field">
+                    <label class="initiative-check" for="combatantMajorWound">
+                        <input type="checkbox" id="combatantMajorWound">
+                        Already has a major wound
+                    </label>
+                </div>
+                <div class="initiative-actions">
+                    <button type="submit" class="initiative-btn">Add Combatant</button>
+                    <button type="button" id="clearButton" class="initiative-btn initiative-btn-secondary">Clear All</button>
+                </div>
+            </form>
+
+            <div class="combat-bar coc-combat-bar">
+                <span id="roundDisplay" class="round-display">Not in combat</span>
+                <button type="button" id="combatButton" class="initiative-btn" disabled>Start Combat</button>
+                <button type="button" id="nextTurnButton" class="initiative-btn" hidden>Next Turn</button>
+            </div>
+
+            <p id="combatantStatus" class="party-import-status" aria-live="polite"></p>
+            <div id="initiativeList" class="initiative-list"></div>
+        </section>
+    </main>
+
+    <script src="../Javascript/callOfCthulhuInitiative.js"></script>
+</body>
+</html>
