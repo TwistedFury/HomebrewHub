@@ -42,5 +42,16 @@
             "sample0-player-id",
             "sample1-player-id"
         ]
+    },
+    {
+        "name": "Nope",
+        "dm": "Feroion",
+        "character_level": 3,
+        "description": "Run...\n\n\n\n\n\n\n\n\n\nFrom Evrything",
+        "players": [
+            "player-b1ae4fcd",
+            "player-e376929e"
+        ],
+        "campaign_id": "campaign-34f2352f"
     }
 ]
