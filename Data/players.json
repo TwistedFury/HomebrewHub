@@ -83,5 +83,22 @@
             "charisma": 10
         },
         "player_id": "player-e376929e"
+    },
+    {
+        "name": "NPC",
+        "character_name": "Shopkeep #32",
+        "class": "Peasant",
+        "level": 1,
+        "max_hp": 4,
+        "ac": 10,
+        "attributes": {
+            "strength": 10,
+            "dexterity": 11,
+            "constitution": 10,
+            "intelligence": 11,
+            "wisdom": 11,
+            "charisma": 10
+        },
+        "player_id": "player-6efacdf7"
     }
 ]
