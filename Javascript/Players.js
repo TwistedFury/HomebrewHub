@@ -97,7 +97,7 @@ function createPlayerInput(label, name, value, type = 'text') {
     input.required = true;
     if (type === 'number') {
         input.min = name === 'level' ? '1' : '1';
-        input.max = name === 'level' ? '20' : '30';
+        input.max = name === 'level' ? '20' : name === 'max_hp' ? '999' : '30';
     }
     container.append(inputLabel, input);
     return container;
