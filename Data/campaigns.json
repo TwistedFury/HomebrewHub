@@ -5,7 +5,7 @@
         "name": "The Upside",
         "character_level": 1,
         "description": "A 1920s era setting for Dungeons and Dragons 5th Edition.",
-        "player_count": 42
+        "players": [
             "player-e376929e",
             "player-6efacdf7"
         ]
@@ -42,7 +42,6 @@
             "sample0-player-id",
             "sample1-player-id"
         ]
-=======
     },
     {
         "name": "Nope",

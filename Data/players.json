@@ -85,7 +85,6 @@
         "player_id": "player-e376929e"
     },
     {
-<<<<<<< HEAD
         "name": "NPC",
         "character_name": "Shopkeep #32",
         "class": "Peasant",
@@ -135,39 +134,5 @@
             "charisma": 10
         },
         "player_id": "player-a5c24e89"
-=======
-        "name": "owo",
-        "character_name": "Fox",
-        "class": "ROgfue",
-        "level": 15,
-        "max_hp": 1000,
-        "ac": 15,
-        "attributes": {
-            "strength": 10,
-            "dexterity": 10,
-            "constitution": 10,
-            "intelligence": 10,
-            "wisdom": 10,
-            "charisma": 10
-        },
-        "player_id": "player-fa88be55"
-    },
-    {
-        "name": "Fox",
-        "character_name": "Zedro",
-        "class": "Fighter",
-        "level": 20,
-        "max_hp": 50,
-        "ac": 1000,
-        "attributes": {
-            "strength": 30,
-            "dexterity": 30,
-            "constitution": 1,
-            "intelligence": 10,
-            "wisdom": 3,
-            "charisma": 2
-        },
-        "player_id": "player-b1ae4fcd"
->>>>>>> defc9de1f794b567f1084398d5a3c13a2f1fe448
     }
 ]
