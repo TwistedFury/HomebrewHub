@@ -2,10 +2,9 @@
 
 # 🎲 Homebrew Hub
 
-**A character and campaign companion built for Dungeon Masters who write their own rules.**
+**A small browser-based toolkit for tabletop RPG sessions.**
 
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
-![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 ![JSON](https://img.shields.io/badge/JSON-000000?style=for-the-badge&logo=json&logoColor=white)
 ![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)
@@ -16,21 +15,26 @@
 
 ## 📖 Project Description
 
-Homebrew Hub is a web-based character and campaign companion built for Dungeon Masters running homebrew campaigns.
-
-Instead of forcing custom worlds into official-rule tools, it lets DMs define their own **races, classes, subclasses, backgrounds, and items** in a structured format. Players can then build, play, and level up characters directly from that custom content.
+Homebrew Hub is currently a collection of static HTML pages and JSON data for a tabletop RPG project. The implemented interactive feature is an initiative tracker; the repository also contains spell, campaign, and player data that can support future pages.
 
 ## ✨ Features
 
-- 🧬 **Custom Content Creation:** define your own races, classes, subclasses, backgrounds, and items
-- 🧙 **Character Building:** players create characters from the DM's homebrew options
-- 📈 **Leveling Up:** advance characters using your world's own rules
-- 🎲 **Dice Rolling:** integrated with Fantastic Dice
+- ⚔️ **Initiative Tracker:** add one or more creatures with a name, initiative score, and hit points
+- 🔢 **Initiative Sorting:** entries are displayed from highest initiative to lowest
+- ❤️ **Group Hit Points:** track HP separately for each creature in a group
+- 🗑️ **Encounter Controls:** remove individual entries or clear the entire encounter
+- 📖 **Spell Data:** JSON files include spell data from the PHB, SCAG, and XGE, plus a standalone Fireball example page
+- 🧙 **Campaign Data:** JSON files include sample campaign and player records
 
-### 🚀 Stretch Goals
+## 📁 Pages
 
-- 🤖 AI assistance
-- 🎙️ Voice-to-Recap for session summaries
+| Page | Current status |
+| --- | --- |
+| [`index.html`](./index.html) | Redirects to the current landing page |
+| [`homePage.html`](./homePage.html) | Placeholder landing page |
+| [`Pages/Initiative.html`](./Pages/Initiative.html) | Functional initiative tracker |
+| [`Pages/Spells.html`](./Pages/Spells.html) | Static Fireball spell reference |
+| [`Pages/Campaigns.html`](./Pages/Campaigns.html) | Placeholder |
 
 ## 👥 Team Members
 
@@ -48,12 +52,12 @@ Instead of forcing custom worlds into official-rule tools, it lets DMs define th
 | **Back End** | Python |
 | **Data** | JSON |
 | **Version Control** | GitHub |
-| **Libraries** | Fantastic Dice |
-| **Stretch Goals** | AI, Voice-to-Recap |
 
 ## ⚙️ Setup / Installation
 
-**1. Clone the repository**
+No build step or package installation is required.
+
+**1. Clone or download the repository**
 
 ```bash
 git clone https://github.com/TwistedFury/HomebrewHub.git
@@ -62,9 +66,14 @@ git clone https://github.com/TwistedFury/HomebrewHub.git
 **2. Open the project folder**
 
 ```bash
-cd HomebrewHub
+cd HomebrewHub/HomebrewHub
 ```
 
+<<<<<<< HEAD
+**3. Launch a page**
+
+Open [`index.html`](./index.html) in a browser, or open [`Pages/Initiative.html`](./Pages/Initiative.html) directly to use the initiative tracker.
+=======
 **3. Start the local server**
 
 Campaign creation writes to `Data/campaigns.json`, so run the included Python
@@ -79,11 +88,15 @@ Then open `http://localhost:8000/Pages/Campaigns.html`.
 If you prefer VS Code Live Server, start `python server.py` separately and open
 the page through Live Server. The campaign page automatically sends its API
 requests to the Python server when Live Server uses port 5500.
+>>>>>>> defc9de1f794b567f1084398d5a3c13a2f1fe448
 
-**4. Explore**
+For local development, serve the project directory with any static file server and open the page in a browser. The project does not currently include a build system, package manifest, or automated test suite.
 
-Start building or viewing Homebrew Hub pages from the `Pages/` directory as needed.
+## 🔭 Future Work
 
+<<<<<<< HEAD
+The campaign page, landing page, and data-backed spell and campaign views are not implemented yet. Character creation, leveling, dice rolling, AI assistance, and voice-to-recap are also planned ideas rather than current functionality.
+=======
 ## 🌐 GitHub Pages deployment
 
 This is a static site, so GitHub Pages serves the HTML, JavaScript, CSS, and JSON
@@ -155,3 +168,4 @@ record, including attributes, max HP, and armor class. A missing player returns
 *Built with 🎲 and a lot of d20s.*
 
 </div>
+>>>>>>> defc9de1f794b567f1084398d5a3c13a2f1fe448
