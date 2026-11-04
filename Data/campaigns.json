@@ -5,22 +5,9 @@
         "name": "The Upside",
         "character_level": 1,
         "description": "A 1920s era setting for Dungeons and Dragons 5th Edition.",
-<<<<<<< HEAD
-<<<<<<< Updated upstream
         "player_count": 42
-=======
-        "players": [
-            "sample1-player-id",
             "player-e376929e",
-            "player-6efacdf7",
-            "player-58147d0c",
-            "player-158f8847",
-            "player-a5c24e89"
-=======
-        "players": [
-            "sample1-player-id",
-            "sample0-player-id"
->>>>>>> defc9de1f794b567f1084398d5a3c13a2f1fe448
+            "player-6efacdf7"
         ]
     },
     {
@@ -55,8 +42,6 @@
             "sample0-player-id",
             "sample1-player-id"
         ]
-<<<<<<< HEAD
->>>>>>> Stashed changes
 =======
     },
     {
@@ -69,6 +54,5 @@
             "player-e376929e"
         ],
         "campaign_id": "campaign-34f2352f"
->>>>>>> defc9de1f794b567f1084398d5a3c13a2f1fe448
     }
 ]
