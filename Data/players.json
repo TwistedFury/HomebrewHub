@@ -85,37 +85,54 @@
         "player_id": "player-e376929e"
     },
     {
-        "name": "owo",
-        "character_name": "Fox",
-        "class": "ROgfue",
-        "level": 15,
-        "max_hp": 1000,
-        "ac": 15,
+        "name": "NPC",
+        "character_name": "Shopkeep #32",
+        "class": "Peasant",
+        "level": 1,
+        "max_hp": 4,
+        "ac": 10,
         "attributes": {
             "strength": 10,
-            "dexterity": 10,
+            "dexterity": 11,
             "constitution": 10,
-            "intelligence": 10,
+            "intelligence": 11,
+            "wisdom": 11,
+            "charisma": 10
+        },
+        "player_id": "player-6efacdf7"
+    },
+    {
+        "name": "Cameron Troy",
+        "character_name": "Shopkeep #1",
+        "class": "Peasant",
+        "level": 20,
+        "max_hp": 1,
+        "ac": 8,
+        "attributes": {
+            "strength": 10,
+            "dexterity": 6,
+            "constitution": 10,
+            "intelligence": 4,
             "wisdom": 10,
             "charisma": 10
         },
-        "player_id": "player-fa88be55"
+        "player_id": "player-158f8847"
     },
     {
-        "name": "Fox",
-        "character_name": "Zedro",
-        "class": "Fighter",
+        "name": "Cameron Troy",
+        "character_name": "Shopkeep #1",
+        "class": "Peasant",
         "level": 20,
-        "max_hp": 50,
-        "ac": 1000,
+        "max_hp": 1,
+        "ac": 7,
         "attributes": {
-            "strength": 30,
-            "dexterity": 30,
-            "constitution": 1,
-            "intelligence": 10,
-            "wisdom": 3,
-            "charisma": 2
+            "strength": 10,
+            "dexterity": 6,
+            "constitution": 10,
+            "intelligence": 4,
+            "wisdom": 10,
+            "charisma": 10
         },
-        "player_id": "player-b1ae4fcd"
+        "player_id": "player-a5c24e89"
     }
 ]

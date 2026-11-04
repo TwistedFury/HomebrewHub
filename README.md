@@ -2,10 +2,9 @@
 
 # 🎲 Homebrew Hub
 
-**A character and campaign companion built for Dungeon Masters who write their own rules.**
+**A browser-based toolkit for tabletop RPG sessions.**
 
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
-![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 ![JSON](https://img.shields.io/badge/JSON-000000?style=for-the-badge&logo=json&logoColor=white)
 ![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)
@@ -16,21 +15,44 @@
 
 ## 📖 Project Description
 
-Homebrew Hub is a web-based character and campaign companion built for Dungeon Masters running homebrew campaigns.
-
-Instead of forcing custom worlds into official-rule tools, it lets DMs define their own **races, classes, subclasses, backgrounds, and items** in a structured format. Players can then build, play, and level up characters directly from that custom content.
+Homebrew Hub is a browser-based tabletop RPG toolkit for organizing campaign
+information, player characters, spell references, and combat encounters. The
+front end uses HTML, CSS, and JavaScript, while the included Python server
+provides API endpoints for saving campaign and player data to JSON files.
 
 ## ✨ Features
 
-- 🧬 **Custom Content Creation:** define your own races, classes, subclasses, backgrounds, and items
-- 🧙 **Character Building:** players create characters from the DM's homebrew options
-- 📈 **Leveling Up:** advance characters using your world's own rules
-- 🎲 **Dice Rolling:** integrated with Fantastic Dice
+- 🗺️ **Campaigns:** browse campaigns, create campaigns, and add or remove saved
+  players from a campaign
+- 🧙 **Players:** create, view, clone, and edit player characters with class,
+  level, hit points, armor class, and six attributes
+- ⚔️ **D&D Combat:** track initiative, HP, AC, creature types and sizes,
+  player-controlled creatures, bosses, legendary actions and resistances,
+  vehicles, lairs, and imported campaign parties
+- 🌃 **Cyberpunk RED Combat:** track initiative, HP or vehicle SDP, head and
+  body SP, player groups, bosses, vehicles, enemy quick-reference stats,
+  damage, and armor ablation
+- 🕯️ **Call of Cthulhu Combat:** track DEX order, rounds, turns, HP, major
+  wounds, unconscious or dying states, CON checks, damage, and delayed turns
+- 📖 **Spell Library:** search and filter spells from PHB, SCAG, and XGE data
+  by name, level, source, school, ritual, concentration, or class
+- 🔍 **Multi-spell Display:** search the spell library and compare up to eight
+  spell entries at once
 
-### 🚀 Stretch Goals
+## 📁 Pages
 
-- 🤖 AI assistance
-- 🎙️ Voice-to-Recap for session summaries
+| Page | Current status |
+| --- | --- |
+| [`index.html`](./index.html) | Redirects to the current landing page |
+| [`homePage.html`](./homePage.html) | Dashboard with links to all tools |
+| [`Pages/Campaigns.html`](./Pages/Campaigns.html) | Campaign list, creation, and player assignment |
+| [`Pages/Players.html`](./Pages/Players.html) | Player creation, cloning, editing, and saved-player list |
+| [`Pages/InitiativeTrackers.html`](./Pages/InitiativeTrackers.html) | Initiative tracker selector |
+| [`Pages/DnDInitiative.html`](./Pages/DnDInitiative.html) | Dungeons & Dragons combat tracker |
+| [`Pages/CyberpunkInitiative.html`](./Pages/CyberpunkInitiative.html) | Cyberpunk RED combat tracker |
+| [`Pages/CallOfCthulhuInitiative.html`](./Pages/CallOfCthulhuInitiative.html) | Call of Cthulhu combat tracker |
+| [`Pages/Spells.html`](./Pages/Spells.html) | Searchable and filterable spell library |
+| [`Pages/Spell-Display.html`](./Pages/Spell-Display.html) | Multi-spell comparison view |
 
 ## 👥 Team Members
 
@@ -48,12 +70,12 @@ Instead of forcing custom worlds into official-rule tools, it lets DMs define th
 | **Back End** | Python |
 | **Data** | JSON |
 | **Version Control** | GitHub |
-| **Libraries** | Fantastic Dice |
-| **Stretch Goals** | AI, Voice-to-Recap |
 
 ## ⚙️ Setup / Installation
 
-**1. Clone the repository**
+No build step or package installation is required.
+
+**1. Clone or download the repository**
 
 ```bash
 git clone https://github.com/TwistedFury/HomebrewHub.git
@@ -62,58 +84,51 @@ git clone https://github.com/TwistedFury/HomebrewHub.git
 **2. Open the project folder**
 
 ```bash
-cd HomebrewHub
+cd HomebrewHub/HomebrewHub
 ```
 
 **3. Start the local server**
 
-Campaign creation writes to `Data/campaigns.json`, so run the included Python
-server instead of opening the HTML file directly:
+Run the included Python server so campaign and player changes can be saved to
+the JSON data files:
 
 ```bash
 python server.py
 ```
 
-Then open `http://localhost:8000/Pages/Campaigns.html`.
+Then open `http://localhost:8000/index.html`.
 
-If you prefer VS Code Live Server, start `python server.py` separately and open
-the page through Live Server. The campaign page automatically sends its API
-requests to the Python server when Live Server uses port 5500.
+The server runs on `http://localhost:8000` and serves both the web pages and
+the JSON API. Opening pages directly from the file system may prevent API
+requests from working.
 
-**4. Explore**
+If using VS Code Live Server on port 5500, keep `python server.py` running in
+another terminal; the campaign and player pages automatically send their API
+requests to port 8000.
 
-Start building or viewing Homebrew Hub pages from the `Pages/` directory as needed.
+## 🔌 API
 
-## 🌐 GitHub Pages deployment
+The Python server exposes these endpoints:
 
-This is a static site, so GitHub Pages serves the HTML, JavaScript, CSS, and JSON
-directly. The included `.github/workflows/deploy-pages.yml` deploys the repository
-when changes are pushed to `main`.
+- `GET /api/campaigns` — return all campaigns
+- `POST /api/campaigns` — create a campaign
+- `PATCH /api/campaigns/{campaign_id}` — update a campaign's player list
+- `GET /api/players` — return all players
+- `POST /api/players` — create a player
+- `GET /api/players/{player_id}` — return one player
+- `PATCH /api/players/{player_id}` — update a player
 
-1. Push the project to GitHub and open **Settings → Pages**.
-2. Under **Build and deployment**, choose **GitHub Actions** as the source.
-3. Push to `main` or run **Deploy static site to GitHub Pages** from the Actions tab.
+Campaigns are stored in [`Data/campaigns.json`](./Data/campaigns.json), and
+players are stored in [`Data/players.json`](./Data/players.json). Campaign
+records reference players by their `player_id`.
 
-The campaign page reads the `id` query parameter and selects that record from
-`Data/campaigns.json`:
+To open a specific campaign, pass its `campaign_id` in the URL:
 
 ```text
-https://<owner>.github.io/<repository>/Pages/Campaigns.html?id=nickb-1
+http://localhost:8000/Pages/Campaigns.html?id=nickb-1
 ```
 
-For example, the campaign in the sample data is available with:
-
-```text
-Pages/Campaigns.html?id=nickb-1
-```
-
-Add more records to `Data/campaigns.json` with unique `campaign_id` values and
-use each value in the URL. Each campaign can include a `players` array of IDs
-from `Data/players.json`; the campaign detail view resolves those IDs into
-searchable player cards. Use `server.py` while developing so campaign form
-submissions are written to the JSON file.
-
-Player records use this shape:
+Player records contain this information:
 
 ```json
 {
@@ -135,23 +150,6 @@ Player records use this shape:
 }
 ```
 
-Create saved players at `Pages/Players.html` while running `server.py`.
-The generated player IDs can then be selected when managing campaign players.
-
-Other pages can retrieve one player by ID with:
-
-```text
-GET /api/players/{player_id}
-```
-
-For example, `GET /api/players/sample0-player-id` returns the complete player
-record, including attributes, max HP, and armor class. A missing player returns
-`404` with a JSON error.
-
----
-
-<div align="center">
-
-*Built with 🎲 and a lot of d20s.*
-
-</div>
+Create saved players at [`Pages/Players.html`](./Pages/Players.html) while
+`server.py` is running. The generated IDs can then be assigned to campaigns or
+imported into the D&D combat tracker.
