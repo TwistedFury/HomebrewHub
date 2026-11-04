@@ -1,1 +1,89 @@
-<p>There is nothing here yet. :)</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Homebrew Hub tools for managing campaigns, spells, and encounters.">
+    <title>Homebrew Hub</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="home-page">
+    <header class="hp-topbar">
+        <a class="hp-brand" href="homePage.html" aria-label="Homebrew Hub home">Homebrew Hub</a>
+        <nav class="hp-topnav" aria-label="Main navigation">
+            <a href="Pages/Campaigns.html">Campaigns</a>
+            <a href="Pages/Players.html">Players</a>
+            <a href="Pages/InitiativeTrackers.html">Initiative Trackers</a>
+            <a href="Pages/Spells.html">Spells</a>
+        </nav>
+    </header>
+
+    <main class="hp-dashboard">
+        <section class="hp-hero">
+            <p class="hp-eyebrow">Your tabletop companion</p>
+            <h1>Welcome to Homebrew Hub</h1>
+            <p>Keep campaign details, spell references, and combat initiative close at hand.</p>
+        </section>
+
+        <section class="hp-info-section" aria-labelledby="hp-tools-heading">
+            <div class="hp-info-heading">
+                <div>
+                    <p class="hp-eyebrow">Explore the toolkit</p>
+                    <h2 id="hp-tools-heading">What you can do</h2>
+                </div>
+                <p class="hp-scroll-hint">Scroll to explore all tools</p>
+            </div>
+
+            <div class="hp-info-panel" tabindex="0" role="region" aria-label="Homebrew Hub capabilities">
+                <div class="hp-tool-grid">
+                    <article class="hp-tool-card">
+                        <h3>Campaigns</h3>
+                        <p>Browse campaign details, or create a campaign with its name, Dungeon Master, starting level, description, and party size.</p>
+                        <a href="Pages/Campaigns.html">Open Campaigns</a>
+                    </article>
+
+                    <article class="hp-tool-card">
+                        <h3>DnD Initiative Tracker</h3>
+                        <p>Build an encounter, sort creatures by initiative, track hit points for individual creatures or groups, and remove entries as the fight progresses for Dungeons & Dragons.</p>
+                        <a href="Pages/DnDInitiative.html">Open Initiative Tracker</a>
+                    </article>
+
+                    <article class="hp-tool-card">
+                        <h3>Cyberpunk RED Initiative Tracker</h3>
+                        <p>Build an encounter, sort creatures by initiative, track hit points for individual creatures or groups, and remove entries as the fight progresses For Cyberpunk RED.</p>
+                        <a href="Pages/CyberpunkInitiative.html">Open Initiative Tracker</a>
+                    </article>
+
+                    <article class="hp-tool-card">
+                        <h3>Call of Cthulhu Initiative Tracker</h3>
+                        <p>Enter DEX initiative values, advance combat rounds, and record Keeper-reported check results while tracking hit points, major wounds, and dying investigators.</p>
+                        <a href="Pages/CallOfCthulhuInitiative.html">Open Initiative Tracker</a>
+                    </article>
+
+                    <article class="hp-tool-card">
+                        <h3>Spell Library</h3>
+                        <p>Search spells by name and narrow results by level, book (PHB, SCAG, or XGE), school, ritual, concentration, or class.</p>
+                        <a href="Pages/Spells.html">Browse Spells</a>
+                    </article>
+
+                    <article class="hp-tool-card">
+                        <h3>Multi-spell Display</h3>
+                        <p>Search the spell library, select up to eight spells, and view their details side by side for quick reference or comparison.</p>
+                        <a href="Pages/Spell-Display.html">View Spells</a>
+                    </article>
+
+                    <article class="hp-tool-card">
+                        <h3>Players</h3>
+                        <p>Manage player information, including name, level, max HP, armor class, and attributes.</p>
+                        <a href="Pages/Players.html">Manage Players</a>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <footer class="hp-footer">
+            Homebrew Hub · Tools for your next adventure
+        </footer>
+    </main>
+</body>
+</html>

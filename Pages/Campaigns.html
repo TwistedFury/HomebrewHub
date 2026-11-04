@@ -1,1 +1,72 @@
-yippee
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Campaign | Homebrew Hub</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="icon" href="../Images/Shield.png" type="image/png">
+</head>
+<body class="home-page">
+    <header class="hp-topbar">
+        <a class="hp-brand" href="../homePage.html" aria-label="Homebrew Hub home">Homebrew Hub</a>
+        <nav class="hp-topnav" aria-label="Main navigation">
+            
+            <a href="Campaigns.html" aria-current="page">Campaigns</a>
+            <a href="Players.html">Players</a>
+            <a href="InitiativeTrackers.html">Initiative Trackers</a>
+            <a href="Spells.html">Spells</a>
+        </nav>
+    </header>
+
+    <main class="campaign-page">
+        <article id="campaign-portfolio" aria-live="polite">
+            <p>Loading campaign...</p>
+        </article>
+        <section class="campaign-create-section" aria-label="Create a campaign">
+            <button type="button" id="campaign-create-toggle" class="campaign-create-toggle"
+                aria-controls="campaign-form" aria-expanded="false">
+                Create Campaign
+            </button>
+        </section>
+    </main>
+
+    <form id="campaign-form" class="campaign-form" aria-label="Campaign Form" hidden>
+        <div class="campaign-form-heading">
+            <p class="eyebrow">Build your world</p>
+            <h2>Create a Campaign</h2>
+            <p>Bring your next adventure to life and share it with your party.</p>
+        </div>
+
+        <div>
+            <label for="campaign-name">Campaign Name:*</label>
+            <input type="text" id="campaign-name" name="campaign-name" required>
+        </div>
+
+        <div>
+            <label for="campaign-dm">Dungeon Master:*</label>
+            <input type="text" id="campaign-dm" name="campaign-dm" required>
+        </div>
+
+        <div>
+            <label for="campaign-level">Character Level:*</label>
+            <input type="number" id="campaign-level" name="campaign-level" min="1" max="20" required>
+        </div>
+
+        <div>
+            <label for="campaign-description">Campaign Description:*</label>
+            <textarea id="campaign-description" name="campaign-description" required></textarea>
+        </div>
+
+        <div>
+            <label for="campaign-players">Player IDs (comma-separated, not required):</label>
+            <input type="text" id="campaign-players" name="campaign-players"
+                placeholder="sample0-player-id, sample1-player-id">
+        </div>
+
+        <button type="submit">Create Campaign</button>
+    </form>
+
+    <script src="../Javascript/Campaigns.js"></script>
+</body>
+</html>

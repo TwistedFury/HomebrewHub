@@ -1,9 +1,11 @@
 [
     {
         "campaign_id": "nickb-1",
+        "dm": "Nick",
         "name": "The Upside",
         "character_level": 1,
         "description": "A 1920s era setting for Dungeons and Dragons 5th Edition.",
+<<<<<<< HEAD
 <<<<<<< Updated upstream
         "player_count": 42
 =======
@@ -14,6 +16,11 @@
             "player-58147d0c",
             "player-158f8847",
             "player-a5c24e89"
+=======
+        "players": [
+            "sample1-player-id",
+            "sample0-player-id"
+>>>>>>> defc9de1f794b567f1084398d5a3c13a2f1fe448
         ]
     },
     {
@@ -48,6 +55,20 @@
             "sample0-player-id",
             "sample1-player-id"
         ]
+<<<<<<< HEAD
 >>>>>>> Stashed changes
+=======
+    },
+    {
+        "name": "Nope",
+        "dm": "Feroion",
+        "character_level": 3,
+        "description": "Run...\n\n\n\n\n\n\n\n\n\nFrom Evrything",
+        "players": [
+            "player-b1ae4fcd",
+            "player-e376929e"
+        ],
+        "campaign_id": "campaign-34f2352f"
+>>>>>>> defc9de1f794b567f1084398d5a3c13a2f1fe448
     }
 ]

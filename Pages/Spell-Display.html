@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Spell Display - Homebrew Hub</title>
+    <meta name="description" content="Search and display up to eight spells at once.">
+    <meta name="author" content="Nicholas Beaty - Cody Owens">
+
+    <link rel="stylesheet" type="text/css" href="../styles.css">
+    <link rel="icon" type="image/png" href="../Images/Shield.png">
+</head>
+<body class="home-page">
+    <header class="hp-topbar">
+        <a class="hp-brand" href="../homePage.html" aria-label="Homebrew Hub home">Homebrew Hub</a>
+        <nav class="hp-topnav" aria-label="Main navigation">
+            <a href="Campaigns.html">Campaigns</a>
+            <a href="Players.html">Players</a>
+            <a href="InitiativeTrackers.html">Initiative Trackers</a>
+            <a href="Spells.html">Spells</a>
+        </nav>
+    </header>
+
+    <main class="spell-display-page">
+        <h1>Spell Display</h1>
+        <p class="intro">
+            Search the spell library and add up to eight spells. Select a spell to
+            compare its details with the others below.
+        </p>
+
+        <section class="spell-picker" aria-labelledby="spellSearchHeading">
+            <h2 id="spellSearchHeading">Find spells</h2>
+            <label for="spellSearch">Search by spell name</label>
+            <input id="spellSearch" type="search" autocomplete="off"
+                   placeholder="Start typing a spell name..." aria-controls="spellSearchResults">
+            <p id="searchStatus" class="results-bar" aria-live="polite">Loading spells...</p>
+            <ul id="spellSearchResults" class="spell-search-results"></ul>
+        </section>
+
+        <section class="spell-selection" aria-labelledby="selectedSpellsHeading">
+            <div class="spell-selection-heading">
+                <h2 id="selectedSpellsHeading">Selected spells</h2>
+                <p id="selectionStatus" class="results-bar" aria-live="polite">0 of 8 spells selected</p>
+            </div>
+            <p id="emptySelection" class="no-results">Search for a spell to add it here.</p>
+            <div id="selectedSpells" class="spell-grid" aria-live="polite"></div>
+        </section>
+    </main>
+    <script src="../Javascript/spell-display.js"></script>
+</body>
+</html>
